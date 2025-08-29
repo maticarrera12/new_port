@@ -6,6 +6,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Lenis from "@studio-freight/lenis"
 import "./styles.css"
+import Image from "next/image"
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -59,7 +60,7 @@ export default function WorkSection() {
     const drawGrid = (scrollProgress = 0) => {
       gridCtx.fillStyle = "black"
       gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height)
-      gridCtx.fillStyle = "#f40c3f"
+      gridCtx.fillStyle = "#ff3500"
       const dotSize = 1
       const spacing = 30
       const rows = Math.ceil(gridCanvas.height / spacing)
@@ -132,7 +133,7 @@ export default function WorkSection() {
         el.style.position = "absolute"
         el.style.fontSize = "clamp(8rem, 15vw, 30rem)"
         el.style.fontWeight = "bold"
-        el.style.color = "#f40c3f"
+        el.style.color = "#ff3500"
         el.style.pointerEvents = "none"
         el.style.zIndex = "10"
         textContainer.appendChild(el)
@@ -300,9 +301,15 @@ export default function WorkSection() {
         />
         <div className="text-container" ref={textContainerRef}></div>
         <div className="cards" ref={cardsContainerRef}>
-          <div className="card">
+                      <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img1.jpg" alt="" />
+              <Image 
+                src="/work/img1.jpg" 
+                alt="Eclipse Horizon project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Eclipse Horizon</p>
@@ -311,7 +318,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img2.jpg" alt="" />
+              <Image 
+                src="/work/img2.jpg" 
+                alt="Vision Link project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Vision Link</p>
@@ -320,7 +333,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img3.jpg" alt="" />
+              <Image 
+                src="/work/img3.jpg" 
+                alt="Iron Bond project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Iron Bond</p>
@@ -329,7 +348,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img4.jpg" alt="" />
+              <Image 
+                src="/work/img4.jpg" 
+                alt="Golden Case project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Golden Case</p>
@@ -338,7 +363,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img5.jpg" alt="" />
+              <Image 
+                src="/work/img5.jpg" 
+                alt="Virtual Space project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Virtual Space</p>
@@ -347,7 +378,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img6.jpg" alt="" />
+              <Image 
+                src="/work/img6.jpg" 
+                alt="Smart Vision project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Smart Vision</p>
@@ -356,7 +393,13 @@ export default function WorkSection() {
           </div>
           <div className="card">
             <div className="card-img">
-              <img src="/work/assets/img7.jpg" alt="" />
+              <Image 
+                src="/work/img7.jpg" 
+                alt="Desert Tunnel project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
             </div>
             <div className="card-copy">
               <p>Desert Tunnel</p>
@@ -364,10 +407,6 @@ export default function WorkSection() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="outro">
-        <h1>Projects</h1>
       </section>
     </div>
   )

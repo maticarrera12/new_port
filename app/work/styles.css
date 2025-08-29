@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #f40c3f;
+  background-color: #ff3500;
   overflow-x: hidden;
 }
 
@@ -22,20 +22,18 @@ section {
   overflow: hidden;
 }
 
-.intro,
-.outro {
+.intro{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f40c3f;
+  background-color: #ff3500;
   color: #000;
 }
 
-.intro h1,
-.outro h1 {
-  font-family: "GR NORCH";
+.intro h1{
+  font-family: var(--font-anton), sans-serif;
   font-size: 5vw;
-  font-weight: lighter;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
@@ -79,7 +77,7 @@ canvas {
   font-family: "Anton", sans-serif;
   font-size: clamp(8rem, 15vw, 30rem);
   font-weight: bold;
-  color: #f40c3f;
+  color: #ff3500;
   z-index: 2;
   transform-origin: center;
   transform-style: preserve-3d;
@@ -166,6 +164,7 @@ canvas {
 .card-img {
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 .card-copy {
@@ -177,5 +176,5 @@ canvas {
   text-transform: uppercase;
   font-family: "Akkurat Mono";
   font-size: 12px;
-  color: #f40c3f;
+  color: #ff3500;
 }
