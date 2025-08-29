@@ -458,7 +458,7 @@ const Menu = ({ containerRef }) => {
 
   return (
     <>
-      <nav>
+      <nav className="menu">
         <div className="nav-toggle" ref={navToggleRef} onClick={toggleMenu}>
           <p>{isMenuOpen ? "Close" : "Menu"}</p>
         </div>
@@ -467,7 +467,7 @@ const Menu = ({ containerRef }) => {
         </div>
       </nav>
 
-      <div className="menu-overlay" ref={menuOverlayRef}>
+      <div className="menu-overlay menu" ref={menuOverlayRef}>
         <div className="menu-content" ref={menuContentRef}>
           <div className="menu-col">
             <p ref={(el) => (menuContentItemsRef.current[0] = el)}>

@@ -139,7 +139,7 @@ export default function WorkSection() {
         el.className = "letter"
         el.textContent = ["W", "O", "R", "K"][i]
         el.style.position = "absolute"
-        el.style.fontSize = "clamp(8rem, 15vw, 30rem)"
+        el.style.fontSize = "clamp(6rem, 12vw, 25rem)" // Tamaño inicial más equilibrado
         el.style.fontWeight = "bold"
         el.style.color = "#ff3500"
         el.style.pointerEvents = "none"
@@ -213,18 +213,8 @@ export default function WorkSection() {
     })
 
     const updateLetterSizes = () => {
-      const width = window.innerWidth;
-      let fontSize;
-      
-      if (width <= 480) {
-        fontSize = `clamp(3rem, 8vw, 15rem)`;
-      } else if (width <= 768) {
-        fontSize = `clamp(4rem, 10vw, 20rem)`;
-      } else if (width <= 1200) {
-        fontSize = `clamp(6rem, 12vw, 25rem)`;
-      } else {
-        fontSize = `clamp(8rem, 15vw, 30rem)`;
-      }
+      // Usar el mismo tamaño grande para todas las pantallas
+      const fontSize = `clamp(8rem, 12vw, 25rem)`;
       
       // Update all existing letters
       letterPositions.forEach((_, element) => {
