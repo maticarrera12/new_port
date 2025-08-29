@@ -80,22 +80,22 @@ canvas {
   will-change: transform;
 }
 
-/* Responsive adjustments for letters */
+/* Responsive adjustments for letters - ahora consistente en todas las pantallas */
 @media (max-width: 1200px) {
   .letter {
-    font-size: clamp(6rem, 12vw, 25rem);
+    font-size: clamp(8rem, 12vw, 25rem);
   }
 }
 
 @media (max-width: 768px) {
   .letter {
-    font-size: clamp(4rem, 10vw, 20rem);
+    font-size: clamp(8rem, 12vw, 25rem);
   }
 }
 
 @media (max-width: 480px) {
   .letter {
-    font-size: clamp(3rem, 8vw, 15rem);
+    font-size: clamp(8rem, 12vw, 25rem);
   }
 }
 
@@ -121,39 +121,39 @@ canvas {
   gap: 8px;
 }
 
-/* Responsive adjustments for cards */
+/* Responsive adjustments for cards - ahora consistente en todas las pantallas */
 @media (max-width: 1200px) {
   .card {
-    width: 12%;
-    height: 45%;
+    width: 10%;
+    height: 50%;
   }
 }
 
 @media (max-width: 768px) {
   .cards {
-    padding-left: 120vw;
+    padding-left: 100vw;
   }
   
   .card {
-    width: 15%;
-    height: 40%;
-    padding: 6px;
+    width: 10%;
+    height: 50%;
+    padding: 8px;
   }
 }
 
 @media (max-width: 480px) {
   .cards {
-    padding-left: 150vw;
+    padding-left: 100vw;
   }
   
   .card {
-    width: 20%;
-    height: 35%;
-    padding: 4px;
+    width: 10%;
+    height: 50%;
+    padding: 8px;
   }
   
   .card-copy {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 

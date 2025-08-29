@@ -27,18 +27,13 @@
   font-weight: 700;
 }
 
-section {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
 
 
 
 .awards {
   min-height: 100vh;
   height: max-content;
+  padding-top: 2rem;
 }
 
 .awards p {

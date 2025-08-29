@@ -108,9 +108,16 @@ h1 {
   font-family: var(--font-anton), sans-serif;
   font-weight: 400;
 }
+section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
-p,
-a {
+
+.menu p,
+.menu a {
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.8rem;
