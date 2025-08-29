@@ -1,26 +1,38 @@
 "use client"
-
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Lenis from "@studio-freight/lenis"
+import "./styles.css"
+import Image from "next/image"
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
+
+interface ExtendedLine extends THREE.Line {
+  curve: THREE.CatmullRomCurve3;
+  letterElements: HTMLElement[];
+}
 
 export default function WorkSection() {
   const workSectionRef = useRef<HTMLDivElement>(null)
   const cardsContainerRef = useRef<HTMLDivElement>(null)
   const textContainerRef = useRef<HTMLDivElement>(null)
+  const gridCanvasRef = useRef<HTMLCanvasElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
   const animationFrameRef = useRef<number>()
+  const [isWorkSectionActive, setIsWorkSectionActive] = useState(false)
 
   useEffect(() => {
-    if (!workSectionRef.current || !cardsContainerRef.current || !textContainerRef.current) return
+    if (!workSectionRef.current || !cardsContainerRef.current || !textContainerRef.current || !gridCanvasRef.current)
+      return
 
     // Initialize Lenis smooth scrolling
-    const lenis = new Lenis()
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    })
     lenisRef.current = lenis
 
     lenis.on("scroll", ScrollTrigger.update)
@@ -30,19 +42,13 @@ export default function WorkSection() {
     const workSection = workSectionRef.current
     const cardsContainer = cardsContainerRef.current
     const textContainer = textContainerRef.current
+    const gridCanvas = gridCanvasRef.current
     const moveDistance = window.innerWidth * 5
     let currentXPosition = 0
 
     const lerp = (start: number, end: number, t: number) => start + (end - start) * t
 
-    // Create grid canvas
-    const gridCanvas = document.createElement("canvas")
-    gridCanvas.id = "grid-canvas"
-    gridCanvas.style.position = "absolute"
-    gridCanvas.style.top = "0"
-    gridCanvas.style.left = "0"
-    gridCanvas.style.pointerEvents = "none"
-    workSection.appendChild(gridCanvas)
+    // Setup grid canvas
     const gridCtx = gridCanvas.getContext("2d")!
 
     const resizeGridCanvas = () => {
@@ -58,7 +64,7 @@ export default function WorkSection() {
     const drawGrid = (scrollProgress = 0) => {
       gridCtx.fillStyle = "black"
       gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height)
-      gridCtx.fillStyle = "#f40c3f"
+      gridCtx.fillStyle = "#ff3500"
       const dotSize = 1
       const spacing = 30
       const rows = Math.ceil(gridCanvas.height / spacing)
@@ -93,7 +99,7 @@ export default function WorkSection() {
     lettersRenderer.domElement.style.pointerEvents = "none"
     workSection.appendChild(lettersRenderer.domElement)
 
-    const createTextAnimationPath = (yPos: number, amplitude: number) => {
+    const createTextAnimationPath = (yPos: number, amplitude: number): ExtendedLine => {
       const points = []
       for (let i = 0; i <= 20; i++) {
         const t = i / 20
@@ -110,8 +116,12 @@ export default function WorkSection() {
         new THREE.BufferGeometry().setFromPoints(curve.getPoints(100)),
         new THREE.LineBasicMaterial({ color: 0x000, linewidth: 1 }),
       )
-      ;(line as any).curve = curve
-      return line as any
+      
+      // Cast to unknown first, then to ExtendedLine
+      const extendedLine = line as unknown as ExtendedLine
+      extendedLine.curve = curve
+      extendedLine.letterElements = []
+      return extendedLine
     }
 
     const path = [
@@ -124,14 +134,14 @@ export default function WorkSection() {
 
     const letterPositions = new Map()
     path.forEach((line, i) => {
-      ;(line as any).letterElements = Array.from({ length: 15 }, () => {
+      ;(line as ExtendedLine).letterElements = Array.from({ length: 15 }, () => {
         const el = document.createElement("div")
         el.className = "letter"
         el.textContent = ["W", "O", "R", "K"][i]
         el.style.position = "absolute"
-        el.style.fontSize = "4rem"
+        el.style.fontSize = "clamp(8rem, 15vw, 30rem)"
         el.style.fontWeight = "bold"
-        el.style.color = "#f40c3f"
+        el.style.color = "#ff3500"
         el.style.pointerEvents = "none"
         el.style.zIndex = "10"
         textContainer.appendChild(el)
@@ -146,8 +156,8 @@ export default function WorkSection() {
     const lineSpeedMultipliers = [0.8, 1, 0.7, 0.9]
     const updateTargetPositions = (scrollProgress = 0) => {
       path.forEach((line, lineIndex) => {
-        ;(line as any).letterElements.forEach((element: HTMLElement, i: number) => {
-          const point = (line as any).curve.getPoint((i / 14 + scrollProgress * lineSpeedMultipliers[lineIndex]) % 1)
+        ;(line as ExtendedLine).letterElements.forEach((element: HTMLElement, i: number) => {
+          const point = (line as ExtendedLine).curve.getPoint((i / 14 + scrollProgress * lineSpeedMultipliers[lineIndex]) % 1)
           const vector = point.clone().project(lettersCamera)
           const positions = letterPositions.get(element)
           positions.target = {
@@ -198,8 +208,29 @@ export default function WorkSection() {
       onUpdate: (self) => {
         updateTargetPositions(self.progress)
         drawGrid(self.progress)
+        setIsWorkSectionActive(self.progress > 0)
       },
     })
+
+    const updateLetterSizes = () => {
+      const width = window.innerWidth;
+      let fontSize;
+      
+      if (width <= 480) {
+        fontSize = `clamp(3rem, 8vw, 15rem)`;
+      } else if (width <= 768) {
+        fontSize = `clamp(4rem, 10vw, 20rem)`;
+      } else if (width <= 1200) {
+        fontSize = `clamp(6rem, 12vw, 25rem)`;
+      } else {
+        fontSize = `clamp(8rem, 15vw, 30rem)`;
+      }
+      
+      // Update all existing letters
+      letterPositions.forEach((_, element) => {
+        element.style.fontSize = fontSize;
+      });
+    }
 
     const handleResize = () => {
       resizeGridCanvas()
@@ -208,6 +239,7 @@ export default function WorkSection() {
       lettersCamera.updateProjectionMatrix()
       lettersRenderer.setSize(window.innerWidth, window.innerHeight)
       updateTargetPositions(ScrollTrigger.getAll()[0]?.progress || 0)
+      updateLetterSizes()
     }
 
     window.addEventListener("resize", handleResize)
@@ -216,6 +248,7 @@ export default function WorkSection() {
     drawGrid(0)
     animate()
     updateTargetPositions(0)
+    updateLetterSizes()
 
     // Cleanup function
     return () => {
@@ -237,9 +270,6 @@ export default function WorkSection() {
       lettersScene.clear()
 
       // Clean up DOM elements
-      if (gridCanvas.parentNode) {
-        gridCanvas.parentNode.removeChild(gridCanvas)
-      }
       if (lettersRenderer.domElement.parentNode) {
         lettersRenderer.domElement.parentNode.removeChild(lettersRenderer.domElement)
       }
@@ -256,31 +286,136 @@ export default function WorkSection() {
   }, [])
 
   return (
-    <div ref={workSectionRef} className="work relative h-screen overflow-hidden bg-black">
-      <div ref={textContainerRef} className="text-container absolute inset-0 z-10" />
-      <div ref={cardsContainerRef} className="cards flex gap-8 p-8">
-        {/* Add your card content here */}
-        <div className="card min-w-[300px] h-[400px] bg-white rounded-lg p-6">
-          <h3 className="text-2xl font-bold mb-4">Project 1</h3>
-          <p className="text-gray-600">Your project description here...</p>
+    <div className="app">
+      <section className="intro">
+        <h1>Projects</h1>
+      </section>
+
+      <section className="work" ref={workSectionRef}>
+        <canvas
+          id="grid-canvas"
+          ref={gridCanvasRef}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 0,
+            pointerEvents: "none",
+            opacity: isWorkSectionActive ? 1 : 0,
+            transition: "opacity 0.3s ease",
+          }}
+        />
+        <div className="text-container" ref={textContainerRef}></div>
+        <div className="cards" ref={cardsContainerRef}>
+                      <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img1.jpg" 
+                alt="Eclipse Horizon project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Eclipse Horizon</p>
+              <p>739284</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img2.jpg" 
+                alt="Vision Link project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Vision Link</p>
+              <p>385912</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img3.jpg" 
+                alt="Iron Bond project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Iron Bond</p>
+              <p>621478</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img4.jpg" 
+                alt="Golden Case project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Golden Case</p>
+              <p>839251</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img5.jpg" 
+                alt="Virtual Space project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Virtual Space</p>
+              <p>456732</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img6.jpg" 
+                alt="Smart Vision project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Smart Vision</p>
+              <p>974315</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-img">
+              <Image 
+                src="/work/img7.jpg" 
+                alt="Desert Tunnel project" 
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
+              />
+            </div>
+            <div className="card-copy">
+              <p>Desert Tunnel</p>
+              <p>621943</p>
+            </div>
+          </div>
         </div>
-        <div className="card min-w-[300px] h-[400px] bg-white rounded-lg p-6">
-          <h3 className="text-2xl font-bold mb-4">Project 2</h3>
-          <p className="text-gray-600">Your project description here...</p>
-        </div>
-        <div className="card min-w-[300px] h-[400px] bg-white rounded-lg p-6">
-          <h3 className="text-2xl font-bold mb-4">Project 3</h3>
-          <p className="text-gray-600">Your project description here...</p>
-        </div>
-        <div className="card min-w-[300px] h-[400px] bg-white rounded-lg p-6">
-          <h3 className="text-2xl font-bold mb-4">Project 4</h3>
-          <p className="text-gray-600">Your project description here...</p>
-        </div>
-        <div className="card min-w-[300px] h-[400px] bg-white rounded-lg p-6">
-          <h3 className="text-2xl font-bold mb-4">Project 5</h3>
-          <p className="text-gray-600">Your project description here...</p>
-        </div>
-      </div>
+      </section>
     </div>
   )
 }
