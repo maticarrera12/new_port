@@ -28,7 +28,7 @@ const Menu = ({ containerRef }) => {
     { label: "Home", route: "/" },
     { label: "Services", route: "/services" },
     { label: "Work", route: "/work" },
-    { label: "Studies", route: "/studies" },
+    { label: "About", route: "/about" },
     { label: "Write", route: "/write" },
   ];
 
