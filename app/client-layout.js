@@ -1,5 +1,4 @@
 "use client";
-
 import Menu from "../components/Menu/Menu.jsx";
 import { useRef } from "react";
 

@@ -1,11 +1,9 @@
-import React from 'react'
 
-const page = () => {
+
+export default function Home() {
   return (
-    <section className='hero'>
-      <h1>Shaping the Future</h1>
-    </section>
+    <div>
+     <h1>Shaping the Future</h1>
+    </div>
   )
 }
-
-export default page

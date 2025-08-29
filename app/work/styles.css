@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #000;
+  background-color: #f40c3f;
   overflow-x: hidden;
 }
 
@@ -27,17 +27,16 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--accent);
+  background-color: #f40c3f;
   color: #000;
 }
 
 .intro h1,
 .outro h1 {
+  font-family: "GR NORCH";
   font-size: 5vw;
   font-weight: lighter;
   text-transform: uppercase;
-  margin: 0;
-  font-family: "Anton", sans-serif;
 }
 
 .outro {
@@ -78,13 +77,32 @@ canvas {
 .letter {
   position: absolute;
   font-family: "Anton", sans-serif;
-  font-size: 14rem;
+  font-size: clamp(8rem, 15vw, 30rem);
   font-weight: bold;
-  color: var(--accent);
+  color: #f40c3f;
   z-index: 2;
   transform-origin: center;
   transform-style: preserve-3d;
   will-change: transform;
+}
+
+/* Responsive adjustments for letters */
+@media (max-width: 1200px) {
+  .letter {
+    font-size: clamp(6rem, 12vw, 25rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .letter {
+    font-size: clamp(4rem, 10vw, 20rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .letter {
+    font-size: clamp(3rem, 8vw, 15rem);
+  }
 }
 
 .cards {
@@ -109,6 +127,42 @@ canvas {
   gap: 8px;
 }
 
+/* Responsive adjustments for cards */
+@media (max-width: 1200px) {
+  .card {
+    width: 12%;
+    height: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards {
+    padding-left: 120vw;
+  }
+  
+  .card {
+    width: 15%;
+    height: 40%;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards {
+    padding-left: 150vw;
+  }
+  
+  .card {
+    width: 20%;
+    height: 35%;
+    padding: 4px;
+  }
+  
+  .card-copy {
+    font-size: 10px;
+  }
+}
+
 .card-img {
   flex: 1;
   overflow: hidden;
@@ -121,7 +175,7 @@ canvas {
   align-items: center;
   padding: 0 4px;
   text-transform: uppercase;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Akkurat Mono";
   font-size: 12px;
-  color: var(--accent);
+  color: #f40c3f;
 }
