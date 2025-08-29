@@ -2,7 +2,7 @@
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen">
      <h1>Shaping the Future</h1>
     </div>
   )
