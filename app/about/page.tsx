@@ -6,7 +6,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "./styles.css";
 
-// Extend Window interface for custom properties
 declare global {
   interface Window {
     duplicateIcons: HTMLElement[] | null;
@@ -326,6 +325,7 @@ const AboutPage = () => {
   }, []);
 
   return (
+    <div>
     <div className="min-h-screen about">
       <section className="hero">
         <div className="hero-header">
@@ -393,6 +393,9 @@ const AboutPage = () => {
           <span className="text-segment">interactions.</span>
         </h1>
       </section>
+    </div>
+    <div>
+    </div>
     </div>
   );
 };
