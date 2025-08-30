@@ -348,7 +348,6 @@ const Menu = ({ containerRef }) => {
     // Cambiar el estado inmediatamente para que el texto cambie al inicio de la animación
     setIsMenuOpen(!isMenuOpen);
 
-    const container = containerRef.current;
     const menuOverlay = menuOverlayRef.current;
     const menuContent = menuContentRef.current;
     const menuImage = menuImageRef.current;
@@ -357,19 +356,11 @@ const Menu = ({ containerRef }) => {
     const menuLinksWrapper = menuLinksWrapperRef.current;
 
     if (!isMenuOpen) {
-      gsap.to(container, {
-        y: "-40%",
-        opacity: 0.25,
-        duration: 1.25,
-        ease: "expo.out",
-      });
-
       gsap.to(menuOverlay, {
         clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
         duration: 1.25,
         ease: "expo.out",
         onComplete: () => {
-          gsap.set(container, { y: "40%" });
           gsap.set(".menu-link", { overflow: "visible" });
 
           setIsMenuAnimating(false);
@@ -405,13 +396,6 @@ const Menu = ({ containerRef }) => {
         ease: "expo.out",
       });
     } else {
-      gsap.to(container, {
-        y: "0%",
-        opacity: 1,
-        duration: 1.25,
-        ease: "expo.out",
-      });
-
       gsap.to(menuLinks, {
         y: "-200%",
         duration: 1.25,
