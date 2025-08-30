@@ -11,7 +11,7 @@
   backdrop-filter: blur(10px);
   border-radius: 4rem;
   cursor: pointer;
-  margin: 1rem 0;
+  margin: 1rem .5;
   transform: scale(0);
   text-decoration: none;
 }
@@ -48,7 +48,7 @@
   transform: translate(-50%, -50%);
   margin: 0 0 0 1.5rem;
   text-align: center;
-  color: #666666;
+  color: #121212;
   font-family: "Manrope", sans-serif;
   font-weight: 600;
   line-height: 1;
