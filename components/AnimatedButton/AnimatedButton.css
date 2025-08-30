@@ -22,7 +22,7 @@
   margin: 0;
   width: 3.2rem;
   height: 3.2rem;
-  background: #000000;
+  background: #121212;
   border-radius: 4rem;
   font-size: 1.5rem;
   transform: scale(0);
@@ -74,5 +74,5 @@
 }
 
 .btn:hover .button-text {
-  color: #ffffff;
+  color: #fafafa;
 }
