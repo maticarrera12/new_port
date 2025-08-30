@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  overflow-y: scroll; /* Force scrollbar to always be present */
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about h1 {
+  font-size: 7vw;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.about p {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.about section {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #141414;
+  color: #e3e3db;
+  overflow: hidden;
+}
+
+.about .hero {
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.about .hero-header {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  will-change: transform, opacity;
+}
+
+.animated-icons {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  will-change: transform;
+  z-index: 2;
+}
+
+.animated-icon {
+  flex: 1;
+  aspect-ratio: 1;
+  will-change: transform;
+}
+
+.animated-text {
+  position: relative;
+  max-width: 1000px;
+  text-align: center;
+  color: #141414;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.text-segment {
+  opacity: 0;
+}
+
+.placeholder-icon {
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  vertical-align: middle;
+  will-change: transform;
+  visibility: hidden;
+}
+
+@media (max-width: 1000px) {
+  .about h1 {
+    font-size: 12vw;
+    text-align: center;
+  }
+
+  .about p {
+    font-size: 1.1rem;
+  }
+
+  .about .hero-header {
+    top: 45%;
+    width: 100%;
+  }
+
+  .about .placeholder-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.duplicate-icon {
+  position: absolute !important;
+  z-index: 1000;
+  pointer-events: none;
+}
