@@ -487,8 +487,8 @@ const Menu = ({ containerRef }) => {
           </div>
           <div className="menu-col">
             <p ref={(el) => (menuContentItemsRef.current[7] = el)}>
-              <span>Instagram</span>
-              <span>Instagram</span>
+              <span>Github</span>
+              <span>Github</span>
             </p>
             <p ref={(el) => (menuContentItemsRef.current[8] = el)}>
               <span>Linkedin</span>
