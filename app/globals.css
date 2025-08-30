@@ -87,6 +87,9 @@
 
 body {
   font-family: var(--font-dm-sans), sans-serif;
+  background-color: #FAFAFA;
+  overflow-x: hidden;
+  overflow-y: scroll; /* Force scrollbar to always be present */
 }
 
 nav img {

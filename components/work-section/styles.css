@@ -1,29 +1,14 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  overflow-x: hidden;
-}
-
 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.app {
-  width: 100%;
-  overflow-x: hidden;
-}
 
 .intro {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
   color: #000;
   width: 100vw;
   height: 100vh;

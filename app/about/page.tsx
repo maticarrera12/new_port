@@ -135,7 +135,7 @@ const AboutPage = () => {
           });
 
           if (scaleProgress >= 0.5) {
-            (heroSection as HTMLElement)!.style.backgroundColor = "#e3e3db";
+            (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
           } else {
             (heroSection as HTMLElement)!.style.backgroundColor = "#141414";
           }
@@ -171,7 +171,7 @@ const AboutPage = () => {
             opacity: 0,
           });
 
-          (heroSection as HTMLElement)!.style.backgroundColor = "#e3e3db";
+          (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
 
           const targetCenterY = window.innerHeight / 2;
           const targetCenterX = window.innerWidth / 2;
@@ -254,7 +254,7 @@ const AboutPage = () => {
             opacity: 0,
           });
 
-          (heroSection as HTMLElement)!.style.backgroundColor = "#e3e3db";
+          (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
 
           gsap.set(animatedIcons, { opacity: 0 });
 
@@ -377,17 +377,20 @@ const AboutPage = () => {
         </div>
 
         <h1 className="animated-text">
+          <span className="text-segment">Crafting</span>
           <div className="placeholder-icon"></div>
-          <span className="text-segment">Crafting digital</span>
+          <span className="text-segment">digital</span>
+          <span className="text-segment"> experiences that</span>
           <div className="placeholder-icon"></div>
-          <span className="text-segment">experiences that</span>
           <span className="text-segment">blend functionality </span>
+          <span className="text-segment">with</span>
           <div className="placeholder-icon"></div>
-          <span className="text-segment">with beautiful</span>
+          <span className="text-segment">beautiful</span>
           <div className="placeholder-icon"></div>
-          <span className="text-segment">interface design</span>
+          <span className="text-segment">interface design </span>
+          <span className="text-segment">and seamless user</span>
           <div className="placeholder-icon"></div>
-          <span className="text-segment">and seamless user interactions.</span>
+          <span className="text-segment">interactions.</span>
         </h1>
       </section>
     </div>

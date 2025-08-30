@@ -1,6 +1,6 @@
 .footer {
   background-color: #000;
-  color: #fff;
+  color: #FAFAFA;
   padding: 4rem 2rem 2rem 2rem;
   margin: 1rem;
   border-radius: 20px;
@@ -54,7 +54,7 @@
 }
 
 .footer-button {
-  background-color: #fff;
+  background-color: #FAFAFA;
   color: #000;
   border: none;
   padding: 1rem 2rem;
@@ -130,7 +130,7 @@
   font-family: "Akkurat Mono", monospace;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
+  color: #FAFAFA;
   text-decoration: none;
   transition: all 0.3s ease;
   opacity: 0.8;
@@ -150,7 +150,7 @@
   font-family: "Anton", sans-serif;
   font-size: clamp(2rem, 12vw, 8rem);
   font-weight: 700;
-  color: #fff;
+  color: #FAFAFA;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   white-space: nowrap;
