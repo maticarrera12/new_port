@@ -53,7 +53,7 @@
 }
 
 .anime-text p {
-  color: #000000;
+  color: #121212;
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
@@ -96,7 +96,7 @@
   transform: translate(-50%, -50%);
   width: calc(100% + 1rem);
   height: calc(100% + 0.4rem);
-  background-color: #fff;
+  background-color: #fafafa;
   border-radius: 2rem;
   z-index: -1;
 }

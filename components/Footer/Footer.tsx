@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-
+import AnimatedButton from "../AnimatedButton/AnimatedButton";
 const Footer = () => {
   return (
     <footer className="footer">
@@ -17,8 +17,8 @@ const Footer = () => {
           <h2 className="footer-question">
             Got a project? Want to collaborate?
           </h2>
-          <button className="footer-button">Discuss your project ►</button>
-        </div>
+          <AnimatedButton label="Discuss your project ►" route="/write" />
+          </div>
 
         {/* Right Side - Addresses */}
         <div className="footer-section">
@@ -55,7 +55,7 @@ const Footer = () => {
       </div>
 
       {/* Large Text Element */}
-      <div className="footer-large-text">LET'S WORK TOGETHER</div>
+      <div className="footer-large-text">LET&apos;S WORK TOGETHER</div>
     </footer>
   );
 };

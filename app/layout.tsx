@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton, DM_Sans } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./client-layout";
+import { ViewTransitions } from "next-view-transitions";
 
 const anton = Anton({
   weight: "400",
@@ -27,14 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${anton.variable} ${dmSans.variable} antialiased`}
-      >
-        <ClientLayout>
-           {children}
-        </ClientLayout>  
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={`${anton.variable} ${dmSans.variable} antialiased`}>
+          <ClientLayout>{children}</ClientLayout>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
