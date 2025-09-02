@@ -120,44 +120,12 @@ const Hero = () => {
                 wordText.style.visibility = "visible";
                 wordText.style.opacity = Math.pow(textRevealProgress, 0.5);
               } else {
-                const reverseProgress = (progress - 0.7) / 0.3;
+                // Una vez que las palabras se revelan, mantenerlas visibles
+                word.style.visibility = "visible";
                 word.style.opacity = 1;
-                const targetTextOpacity = 1;
-
-                const reverseOverlapWords = 5;
-                const reverseWordStart = index / totalWords;
-                const reverseWordEnd =
-                  reverseWordStart + reverseOverlapWords / totalWords;
-
-                const reverseTimelineScale =
-                  1 /
-                  Math.max(
-                    1,
-                    (totalWords - 1) / totalWords + reverseOverlapWords / totalWords
-                  );
-
-                const reverseAdjustedStart =
-                  reverseWordStart * reverseTimelineScale;
-                const reverseAdjustedEnd =
-                  reverseWordEnd * reverseTimelineScale;
-                const reverseDuration =
-                  reverseAdjustedEnd - reverseAdjustedStart;
-
-                const reverseWordProgress =
-                  reverseProgress <= reverseAdjustedStart
-                    ? 0
-                    : reverseProgress >= reverseAdjustedEnd
-                    ? 1
-                    : (reverseProgress - reverseAdjustedStart) / reverseDuration;
-
-                if (reverseWordProgress > 0) {
-                  wordText.style.opacity =
-                    targetTextOpacity * (1 - reverseWordProgress);
-                  word.style.backgroundColor = `rgba(${wordHighlightBgColor}, ${reverseWordProgress})`;
-                } else {
-                  wordText.style.opacity = targetTextOpacity;
-                  word.style.backgroundColor = `rgba(${wordHighlightBgColor}, 0)`;
-                }
+                wordText.style.visibility = "visible";
+                wordText.style.opacity = 1;
+                word.style.backgroundColor = `rgba(${wordHighlightBgColor}, 0)`;
               }
             });
           },
