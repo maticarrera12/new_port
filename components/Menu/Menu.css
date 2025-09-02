@@ -8,7 +8,7 @@ nav {
   display: flex;
   justify-content: space-between;
   mix-blend-mode: difference;
-  z-index: 2;
+  z-index: 1001 !important;
 }
 
 nav p {
@@ -47,7 +47,7 @@ nav section {
   overflow: hidden;
   background-color: var(--dark);
   color: var(--light);
-  z-index: 1;
+  z-index: 1000;
   will-change: clip-path;
 }
 
@@ -130,8 +130,6 @@ nav section {
   display: inline-block;
   will-change: transform;
 }
-
-
 
 /* Estilos para elementos del contenido del menú con efecto de letras */
 .menu-col p {

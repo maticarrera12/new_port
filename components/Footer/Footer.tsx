@@ -17,7 +17,7 @@ const Footer = () => {
           <h2 className="footer-question">
             Got a project? Want to collaborate?
           </h2>
-          <AnimatedButton label="Discuss your project ►" route="/write" />
+          <AnimatedButton label="Discuss your project" route="/write" />
           </div>
 
         {/* Right Side - Addresses */}
