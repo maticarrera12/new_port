@@ -21,7 +21,17 @@ const Hero = () => {
 
       const wordHighlightBgColor = "60, 60, 60";
 
-      const keywords = ["vibrant","living","clarity","expression","shape","intuitive","storytelling","interactive","vision"]
+      const keywords = [
+        "vibrant",
+        "living",
+        "clarity",
+        "expression",
+        "shape",
+        "intuitive",
+        "storytelling",
+        "interactive",
+        "vision",
+      ];
 
       animeTextParagraphs.forEach((paragraph) => {
         const text = paragraph.textContent;
@@ -86,7 +96,9 @@ const Hero = () => {
                   1 /
                   Math.min(
                     totalAnimationLength,
-                    1 + (totalWords - 1) / totalWords + overlapWords / totalWords
+                    1 +
+                      (totalWords - 1) / totalWords +
+                      overlapWords / totalWords
                   );
 
                 const adjustedStart = wordStart * timelineScale;
@@ -115,49 +127,17 @@ const Hero = () => {
                     ? (wordProgress - textRevealThreshold) /
                       (1 - textRevealThreshold)
                     : 0;
-                
+
                 // Hacer visible el texto y animar su opacidad
                 wordText.style.visibility = "visible";
                 wordText.style.opacity = Math.pow(textRevealProgress, 0.5);
               } else {
-                const reverseProgress = (progress - 0.7) / 0.3;
+                // Una vez que las palabras se revelan, mantenerlas visibles
+                word.style.visibility = "visible";
                 word.style.opacity = 1;
-                const targetTextOpacity = 1;
-
-                const reverseOverlapWords = 5;
-                const reverseWordStart = index / totalWords;
-                const reverseWordEnd =
-                  reverseWordStart + reverseOverlapWords / totalWords;
-
-                const reverseTimelineScale =
-                  1 /
-                  Math.max(
-                    1,
-                    (totalWords - 1) / totalWords + reverseOverlapWords / totalWords
-                  );
-
-                const reverseAdjustedStart =
-                  reverseWordStart * reverseTimelineScale;
-                const reverseAdjustedEnd =
-                  reverseWordEnd * reverseTimelineScale;
-                const reverseDuration =
-                  reverseAdjustedEnd - reverseAdjustedStart;
-
-                const reverseWordProgress =
-                  reverseProgress <= reverseAdjustedStart
-                    ? 0
-                    : reverseProgress >= reverseAdjustedEnd
-                    ? 1
-                    : (reverseProgress - reverseAdjustedStart) / reverseDuration;
-
-                if (reverseWordProgress > 0) {
-                  wordText.style.opacity =
-                    targetTextOpacity * (1 - reverseWordProgress);
-                  word.style.backgroundColor = `rgba(${wordHighlightBgColor}, ${reverseWordProgress})`;
-                } else {
-                  wordText.style.opacity = targetTextOpacity;
-                  word.style.backgroundColor = `rgba(${wordHighlightBgColor}, 0)`;
-                }
+                wordText.style.visibility = "visible";
+                wordText.style.opacity = 1;
+                word.style.backgroundColor = `rgba(${wordHighlightBgColor}, 0)`;
               }
             });
           },
@@ -179,54 +159,50 @@ const Hero = () => {
           <h1>I design and build expressive digital experiences.</h1>
         </div>
       </section>
-    
+
       <section className="about-container anime-text-container">
         <div className="copy-container">
           <div className="anime-text">
             <p>
-              I'm Matías Carrera, a fullstack developer 
-              passionate about crafting intuitive and 
-              living interfaces. My work blends 
-              clarity, expression, 
-              and strong storytelling to bring bold 
-              ideas into motion.
+              I'm Matías Carrera, a fullstack developer passionate about
+              crafting intuitive and living interfaces. My work blends clarity,
+              expression, and strong storytelling to bring bold ideas into
+              motion.
             </p>
             <p>
-              With a background in design and development, I create projects that 
-              combine interactive experiences, modern 
-              structures, and a clear vision. Every 
-              line of code and every detail in the UI is built with intent — so 
-              digital products feel both functional and vibrant.
+              With a background in design and development, I create projects
+              that combine interactive experiences, modern structures, and a
+              clear vision. Every line of code and every detail in the UI is
+              built with intent — so digital products feel both functional and
+              vibrant.
             </p>
           </div>
         </div>
       </section>
-    
+
       <section className="cta">
         <div className="copy-container">
           <h1>Let's bring bold ideas to life together.</h1>
         </div>
       </section>
-    
+
       <section className="features anime-text-container">
         <div className="copy-container">
           <div className="anime-text">
             <p>
-              From prototypes to full-stack applications, I build solutions that 
-              feel modern, intuitive, and 
-              interactive. I focus on responsive 
+              From prototypes to full-stack applications, I build solutions that
+              feel modern, intuitive, and interactive. I focus on responsive
               design, smooth motion, and creative problem solving.
             </p>
             <p>
-              My goal is to turn complex challenges into clear and elegant digital 
-              products — where expression meets 
-              clarity, and every idea finds its 
-              shape.
+              My goal is to turn complex challenges into clear and elegant
+              digital products — where expression meets clarity, and every idea
+              finds its shape.
             </p>
           </div>
         </div>
       </section>
-    
+
       <section className="outro">
         <div className="copy-container">
           <h1>Building the future of the web, one interface at a time.</h1>
