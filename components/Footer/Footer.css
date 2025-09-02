@@ -6,7 +6,7 @@
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  z-index: -2;
+  z-index: 1;
 }
 
 .footer-content {
@@ -157,6 +157,7 @@
   z-index: -1;
   overflow: hidden;
   line-height: 0.8;
+  pointer-events: none;
 }
 
 /* Responsive Design */
