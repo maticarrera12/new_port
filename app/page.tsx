@@ -14,18 +14,21 @@ gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 export default function Home() {
   const [showPreloader, setShowPreloader] = useState(false);
-  const [loaderAnimating, setLoaderAnimating] = useState(false);
-  const lenis = useLenis();
+  const tagsRef = useRef(null);
+  const [showPreloader, setShowPreloader] = useState(isInitialLoad);
+
 
   useEffect(() => {
     // Verificar si ya se mostró el loader en esta sesión
     const hasShownLoader = sessionStorage.getItem("loaderShown");
-
     if (!hasShownLoader) {
       setShowPreloader(true);
       // Marcar que ya se mostró el loader
       sessionStorage.setItem("loaderShown", "true");
     }
+    return () => {
+      isInitialLoad = false;
+    };
   }, []);
 
   useEffect(() => {
