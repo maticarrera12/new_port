@@ -1,10 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
-
-.hero-wrapper {
+.animated-text-wrapper {
   width: 100%;
 }
 
-.hero-wrapper section {
+.animated-text-wrapper section {
   position: relative;
   width: 100vw;
   height: 100dvh;
@@ -31,21 +29,16 @@
   line-height: 1;
 }
 
-.hero-container .copy-container {
-  background: #7a78ff;
+.animated-text-container .copy-container {
+  background: var(--orange);
 }
 
 .cta .copy-container {
-  background: #fe6d38;
+  background: var(--orange);
 }
 
 .outro .copy-container {
-  background: #c6fe69;
-}
-
-.about-container .copy-container,
-.features .copy-container {
-  border: 0.15rem dashed rgb(60, 60, 60);
+  background: var(--orange);
 }
 
 .anime-text {
@@ -103,20 +96,14 @@
 
 .anime-text .word span.keyword.vibrant::before,
 .anime-text .word span.keyword.shape::before,
-.anime-text .word span.keyword.interactive::before {
-  background-color: #7a78ff;
-}
-
+.anime-text .word span.keyword.interactive::before,
 .anime-text .word span.keyword.living::before,
 .anime-text .word span.keyword.expression::before,
-.anime-text .word span.keyword.storytelling::before {
-  background-color: #fe6d38;
-}
-
 .anime-text .word span.keyword.clarity::before,
 .anime-text .word span.keyword.intuitive::before,
-.anime-text .word span.keyword.vision::before {
-  background-color: #c6fe69;
+.anime-text .word span.keyword.vision::before,
+.anime-text .word span.keyword.storytelling::before {
+  background-color: var(--orange);
 }
 
 @media (max-width: 1000px) {

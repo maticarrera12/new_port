@@ -1,13 +1,11 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CustomEase from "gsap/CustomEase";
-import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
 import Loader from "../components/Loader/Loader";
-import Hero from "../components/Hero/Hero";
+import AnimatedText from "../components/AnimatedText/AnimatedText";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -49,7 +47,10 @@ export default function Home() {
   return (
     <div>
       <Loader show={showPreloader} onComplete={handleLoaderComplete} />
-      <Hero />
+      <div className="min-h-dvh flex items-center justify-center">
+          <h1>FULL STACK DEVELOPER</h1>
+        </div>
+      <AnimatedText />
     </div>
   );
 }

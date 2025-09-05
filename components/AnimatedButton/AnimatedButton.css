@@ -11,10 +11,9 @@
   backdrop-filter: blur(10px);
   border-radius: 4rem;
   cursor: pointer;
-  margin: 1rem .5rem;
+  margin: 1rem 0.5rem;
   transform: scale(0);
   text-decoration: none;
-
 }
 
 .btn .circle {

@@ -65,7 +65,7 @@ canvas {
   font-family: "Anton", sans-serif;
   font-size: clamp(8rem, 15vw, 30rem);
   font-weight: bold;
-  color: #ff3500;
+  color: var(--orange);
   z-index: 2;
   transform-origin: center;
   transform-style: preserve-3d;
@@ -164,5 +164,5 @@ canvas {
   text-transform: uppercase;
   font-family: "Akkurat Mono";
   font-size: 12px;
-  color: #ff3500;
+  color: var(--orange);
 }
