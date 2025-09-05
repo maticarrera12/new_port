@@ -3,8 +3,8 @@ import "./Menu.css";
 
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
-import { SplitText, } from "gsap/all";
-import {useGSAP} from "@gsap/react"
+import { SplitText } from "gsap/all";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(SplitText, useGSAP);
 
@@ -21,8 +21,6 @@ const Menu = ({ containerRef }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuAnimating, setIsMenuAnimating] = useState(false);
-
-
 
   const menuItems = [
     { label: "Home", route: "/" },
@@ -42,8 +40,6 @@ const Menu = ({ containerRef }) => {
   const targetHighlighterWidth = useRef(0);
 
   const animationFrameRef = useRef(null);
-
-
 
   useGSAP(
     () => {
@@ -69,8 +65,6 @@ const Menu = ({ containerRef }) => {
           }
         });
       });
-
-
 
       // Configurar SplitText para elementos del contenido del menú
       menuContentItems.forEach((contentItem) => {
@@ -202,8 +196,6 @@ const Menu = ({ containerRef }) => {
         link.addEventListener("mouseleave", handleMouseLeave);
       });
 
-
-
       // Agregar animaciones hover para elementos del contenido del menú
       menuContentItems.forEach((contentItem) => {
         if (contentItem) {
@@ -323,8 +315,6 @@ const Menu = ({ containerRef }) => {
             link.removeEventListener("mouseleave", mouseLeaveHandler);
         });
 
-
-
         // Limpiar event listeners de elementos del contenido del menú
         menuContentItems.forEach((contentItem) => {
           if (contentItem) {
@@ -344,7 +334,7 @@ const Menu = ({ containerRef }) => {
   const toggleMenu = () => {
     if (isMenuAnimating) return;
     setIsMenuAnimating(true);
-    
+
     // Cambiar el estado inmediatamente para que el texto cambie al inicio de la animación
     setIsMenuOpen(!isMenuOpen);
 

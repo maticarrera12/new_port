@@ -64,7 +64,7 @@ export default function WorkSection() {
     const drawGrid = (scrollProgress = 0) => {
       gridCtx.fillStyle = "black"
       gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height)
-      gridCtx.fillStyle = "#ff3500"
+      gridCtx.fillStyle = "var(--orange)";
       const dotSize = 1
       const spacing = 30
       const rows = Math.ceil(gridCanvas.height / spacing)
@@ -141,7 +141,7 @@ export default function WorkSection() {
         el.style.position = "absolute"
         el.style.fontSize = "clamp(6rem, 12vw, 25rem)" // Tamaño inicial más equilibrado
         el.style.fontWeight = "bold"
-        el.style.color = "#ff3500"
+        el.style.color = "var(--orange)";
         el.style.pointerEvents = "none"
         el.style.zIndex = "10"
         textContainer.appendChild(el)

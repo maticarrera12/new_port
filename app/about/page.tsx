@@ -31,8 +31,8 @@ const AboutPage = () => {
     const iconElements = document.querySelectorAll(".animated-icon");
     const textSegments = document.querySelectorAll(".text-segment");
     const placeholders = document.querySelectorAll(".placeholder-icon");
-    const heroHeader = document.querySelector(".hero-header");
-    const heroSection = document.querySelector(".hero");
+    const aboutMeHeader = document.querySelector(".about-me-header");
+    const aboutMeSection = document.querySelector(".about-me");
 
     const textAnimationOrder: { segment: Element; originalIndex: number }[] =
       [];
@@ -54,7 +54,7 @@ const AboutPage = () => {
     const exactScale = headerIconSize / currentIconSize;
 
     ScrollTrigger.create({
-      trigger: ".hero",
+      trigger: ".about-me",
       start: "top top",
       end: `+=${window.innerHeight * 8}px`,
       pin: true,
@@ -76,12 +76,12 @@ const AboutPage = () => {
             const headerMoveY = -50 * headerProgress;
             const headerOpacity = 1 - headerProgress;
 
-            gsap.set(heroHeader, {
+            gsap.set(aboutMeHeader, {
               transform: `translate(-50%, calc(-50% + ${headerMoveY}px))`,
               opacity: headerOpacity,
             });
           } else {
-            gsap.set(heroHeader, {
+            gsap.set(aboutMeHeader, {
               transform: `translate(-50%, calc(-50% + -50px))`,
               opacity: 0,
             });
@@ -128,15 +128,15 @@ const AboutPage = () => {
         } else if (progress <= 0.6) {
           const scaleProgress = (progress - 0.3) / 0.3;
 
-          gsap.set(heroHeader, {
+          gsap.set(aboutMeHeader, {
             transform: `translate(-50%, calc(-50% + -50px))`,
             opacity: 0,
           });
 
           if (scaleProgress >= 0.5) {
-            (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
+            (aboutMeSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
           } else {
-            (heroSection as HTMLElement)!.style.backgroundColor = "#141414";
+            (aboutMeSection as HTMLElement)!.style.backgroundColor = "#141414";
           }
 
           // Hide duplicate icons during scaling phase
@@ -165,12 +165,12 @@ const AboutPage = () => {
         } else if (progress <= 0.75) {
           const moveProgress = (progress - 0.6) / 0.15;
 
-          gsap.set(heroHeader, {
+          gsap.set(aboutMeHeader, {
             transform: `translate(-50%, calc(-50% + -50px))`,
             opacity: 0,
           });
 
-          (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
+          (aboutMeSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
 
           const targetCenterY = window.innerHeight / 2;
           const targetCenterX = window.innerWidth / 2;
@@ -248,12 +248,12 @@ const AboutPage = () => {
             });
           }
         } else {
-          gsap.set(heroHeader, {
+          gsap.set(aboutMeHeader, {
             transform: `translate(-50%, calc(-50% + -100px))`,
             opacity: 0,
           });
 
-          (heroSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
+          (aboutMeSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
 
           gsap.set(animatedIcons, { opacity: 0 });
 
@@ -327,8 +327,8 @@ const AboutPage = () => {
   return (
     <div>
     <div className="min-h-screen about">
-      <section className="hero">
-        <div className="hero-header">
+      <section className="about-me">
+        <div className="about-me-header">
           <h1>MCarrera</h1>
           <p>Full Stack Developer & UI/UX Designer</p>
         </div>

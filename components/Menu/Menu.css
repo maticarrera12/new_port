@@ -117,7 +117,7 @@ nav section {
   left: 0;
   width: 400px;
   height: 0.75rem;
-  background-color: var(--accent);
+  background-color: var(--orange);
   will-change: transform, width;
 }
 

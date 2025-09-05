@@ -18,15 +18,13 @@ const Footer = () => {
             Got a project? Want to collaborate?
           </h2>
           <AnimatedButton label="Discuss your project" route="/write" />
-          </div>
+        </div>
 
         {/* Right Side - Addresses */}
         <div className="footer-section">
           <div className="address-group">
             <h3 className="footer-heading">Argentina</h3>
-            <p className="footer-text">
-              Buenos Aires, San Fernando
-            </p>
+            <p className="footer-text">Buenos Aires, San Fernando</p>
           </div>
         </div>
       </div>
