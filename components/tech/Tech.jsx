@@ -8,14 +8,16 @@ export default function Tech() {
   const animationFrameRef = useRef(null);
 
   const techStack = [
-    { name: "HTML", color: "#E34F26" },
-    { name: "CSS", color: "#1572B6" },
-    { name: "JavaScript", color: "#F7DF1E" },
-    { name: "React", color: "#61DAFB" },
-    { name: "Next.js", color: "#000000" },
-    { name: "GSAP", color: "#88CE02" },
-    { name: "Three.js", color: "#000000" },
-    { name: "Node.js", color: "#339933" },
+    { name: "NextJS", logo: "/tech/nextjs.svg" },
+    { name: "TypeScript", logo: "/tech/typescript.svg" },
+    { name: "Supabase", logo: "/tech/supabase.svg" },
+    { name: "ReactJS", logo: "/tech/react.svg" },
+    { name: "Tailwind", logo: "/tech/tailwind.svg" },
+    { name: "Three.js", logo: "/tech/threejs.svg" },
+    { name: "GSAP", logo: "/tech/gsap.svg" },
+    { name: "JavaScript", logo: "/tech/javascript.svg" },
+    { name: "Spring Boot", logo: "/tech/springboot.svg" },
+    { name: "Express", logo: "/tech/express.svg" },
   ];
 
   const moveToElement = useCallback((element, highlight, container) => {
@@ -30,8 +32,8 @@ export default function Tech() {
     highlight.style.transform = `translate(${x}px, ${y}px)`;
     highlight.style.width = `${rect.width}px`;
     highlight.style.height = `${rect.height}px`;
-    highlight.style.backgroundColor = element.dataset.color;
-    highlight.style.opacity = "1";
+    highlight.style.backgroundColor = "#000000";
+    highlight.style.opacity = "0.9";
   }, []);
 
   const handleMouseMove = useCallback(
@@ -86,19 +88,8 @@ export default function Tech() {
 
     if (!container || !highlight) return;
 
-    const gridItems = container.querySelectorAll(".grid-item");
-
-    // Set colors for each item
-    gridItems.forEach((item, index) => {
-      const tech = techStack[index % techStack.length];
-      item.dataset.color = tech.color;
-    });
-
-    // Initialize highlight position
-    const firstItem = container.querySelector(".grid-item");
-    if (firstItem) {
-      moveToElement(firstItem, highlight, container);
-    }
+    // Initialize highlight as hidden
+    highlight.style.opacity = "0";
 
     // Add event listeners
     container.addEventListener("mousemove", handleMouseMove);
@@ -120,6 +111,7 @@ export default function Tech() {
     <section className="tech-section">
       <div className="tech-container" ref={containerRef}>
         <div className="tech-grid">
+          {/* Primera fila: 3 elementos */}
           <div className="grid-row">
             {techStack.slice(0, 3).map((tech, index) => (
               <div
@@ -127,18 +119,37 @@ export default function Tech() {
                 className="grid-item"
                 data-tech={tech.name.toLowerCase()}
               >
-                <p className="tech-label">( {tech.name.toLowerCase()} )</p>
+                <div className="tech-content">
+                  <img src={tech.logo} alt={tech.name} className="tech-logo" />
+                </div>
               </div>
             ))}
           </div>
+          {/* Segunda fila: 4 elementos */}
           <div className="grid-row">
-            {techStack.slice(3, 8).map((tech, index) => (
+            {techStack.slice(3, 7).map((tech, index) => (
               <div
                 key={tech.name}
                 className="grid-item"
                 data-tech={tech.name.toLowerCase()}
               >
-                <p className="tech-label">( {tech.name.toLowerCase()} )</p>
+                <div className="tech-content">
+                  <img src={tech.logo} alt={tech.name} className="tech-logo" />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Tercera fila: 3 elementos */}
+          <div className="grid-row">
+            {techStack.slice(7, 10).map((tech, index) => (
+              <div
+                key={tech.name}
+                className="grid-item"
+                data-tech={tech.name.toLowerCase()}
+              >
+                <div className="tech-content">
+                  <img src={tech.logo} alt={tech.name} className="tech-logo" />
+                </div>
               </div>
             ))}
           </div>
