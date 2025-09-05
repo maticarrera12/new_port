@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import Tech from "../tech/Tech";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -173,7 +174,7 @@ const AnimatedText = () => {
           </div>
         </div>
       </section>
-
+    <Tech/>
       <section className="features anime-text-container">
         <div className="copy-container">
           <div className="anime-text">
