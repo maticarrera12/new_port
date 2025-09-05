@@ -1,5 +1,6 @@
 .animated-text-wrapper {
   width: 100%;
+  overflow: hidden;
 }
 
 .animated-text-wrapper section {
