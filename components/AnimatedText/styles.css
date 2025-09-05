@@ -51,7 +51,8 @@
   margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.2;
+  white-space: normal;
 }
 
 .anime-text .word {
@@ -61,11 +62,17 @@
   margin-bottom: 0.2rem;
   padding: 0.1rem 0.2rem;
   border-radius: 2rem;
-  will-change: background-color, opacity;
+  will-change: background-color, opacity, transform, filter;
+  vertical-align: baseline;
+  transition: all 0.1s ease-out;
+}
+
+.anime-text .word:last-child {
+  margin-right: 0;
 }
 
 .anime-text .word.keyword-wrapper {
-  margin: 0 0.4rem 0.2rem 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .anime-text .word span {
@@ -102,7 +109,12 @@
 .anime-text .word span.keyword.clarity::before,
 .anime-text .word span.keyword.intuitive::before,
 .anime-text .word span.keyword.vision::before,
-.anime-text .word span.keyword.storytelling::before {
+.anime-text .word span.keyword.storytelling::before,
+.anime-text .word span.keyword.modern::before,
+.anime-text .word span.keyword.responsive::before,
+.anime-text .word span.keyword.motion::before,
+.anime-text .word span.keyword.creative::before,
+.anime-text .word span.keyword.elegant::before {
   background-color: var(--orange);
 }
 
