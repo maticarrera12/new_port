@@ -376,7 +376,7 @@ const AboutPage = () => {
           </div>
         </div>
 
-        <h1 className="animated-text">
+        <h2 className="animated-text">
           <span className="text-segment">Crafting</span>
           <div className="placeholder-icon"></div>
           <span className="text-segment">digital</span>
@@ -391,7 +391,7 @@ const AboutPage = () => {
           <span className="text-segment">and seamless user</span>
           <div className="placeholder-icon"></div>
           <span className="text-segment">interactions.</span>
-        </h1>
+        </h2>
       </section>
     </div>
     <div>
