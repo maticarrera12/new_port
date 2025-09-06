@@ -62,7 +62,9 @@ const AnimatedText = ({ sections }) => {
             highlights={section.highlights}
             className={section.className}
             containerClass={section.containerClass || "anime-text-container"}
-            wordHighlightBgColor={section.wordHighlightBgColor || "60, 60, 60"}
+            wordHighlightBgColor={
+              section.wordHighlightBgColor || "200, 200, 200"
+            }
           />
         ))}
     </div>

@@ -10,7 +10,7 @@ const AnimatedTextSection = ({
   highlights = [],
   className = "",
   containerClass = "anime-text-container",
-  wordHighlightBgColor = "60, 60, 60",
+  wordHighlightBgColor = "200, 200, 200",
 }) => {
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -120,12 +120,22 @@ const AnimatedTextSection = ({
             word.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
             word.style.filter = `blur(${blur}px)`;
 
-            const backgroundFadeStart =
-              wordProgress >= 0.9 ? (wordProgress - 0.9) / 0.1 : 0;
-            const backgroundOpacity = Math.max(0, 1 - backgroundFadeStart);
+            // Primera etapa: mostrar fondo gris (0 - 0.6)
+            const backgroundShowThreshold = 0.6;
+            const backgroundOpacity =
+              wordProgress <= backgroundShowThreshold
+                ? Math.min(1, wordProgress / backgroundShowThreshold)
+                : Math.max(
+                    0,
+                    1 -
+                      (wordProgress - backgroundShowThreshold) /
+                        (1 - backgroundShowThreshold)
+                  );
+
             word.style.backgroundColor = `rgba(${wordHighlightBgColor}, ${backgroundOpacity})`;
 
-            const textRevealThreshold = 0.2;
+            // Segunda etapa: mostrar texto después del fondo (0.5 - 1.0)
+            const textRevealThreshold = 0.5;
             const textRevealProgress =
               wordProgress >= textRevealThreshold
                 ? Math.min(
@@ -135,9 +145,14 @@ const AnimatedTextSection = ({
                   )
                 : 0;
 
-            // Hacer visible el texto con transición suave
-            wordText.style.visibility = "visible";
-            wordText.style.opacity = easeOutCubic(textRevealProgress);
+            // Hacer visible el texto con transición suave solo después del threshold
+            if (wordProgress >= textRevealThreshold) {
+              wordText.style.visibility = "visible";
+              wordText.style.opacity = easeOutCubic(textRevealProgress);
+            } else {
+              wordText.style.visibility = "hidden";
+              wordText.style.opacity = 0;
+            }
           } else {
             // Una vez que las palabras se revelan, mantenerlas visibles y en posición final
             word.style.visibility = "visible";
