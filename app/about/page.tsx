@@ -136,7 +136,7 @@ const AboutPage = () => {
           if (scaleProgress >= 0.5) {
             (aboutMeSection as HTMLElement)!.style.backgroundColor = "#FAFAFA";
           } else {
-            (aboutMeSection as HTMLElement)!.style.backgroundColor = "#141414";
+            (aboutMeSection as HTMLElement)!.style.backgroundColor = "#000";
           }
 
           // Hide duplicate icons during scaling phase
@@ -326,76 +326,65 @@ const AboutPage = () => {
 
   return (
     <div>
-    <div className="min-h-screen about">
-      <section className="about-me">
-        <div className="about-me-header">
-          <h1>MCarrera</h1>
-          <p>Full Stack Developer & UI/UX Designer</p>
-        </div>
+      <div className="min-h-screen about">
+        <section className="about-me">
+          <div className="about-me-header">
+            <h1>MCarrera</h1>
+            <p>Full Stack Developer & UI/UX Designer</p>
+          </div>
 
-        <div className="animated-icons">
-          <div className="animated-icon icon-1">
-            <Image
-              src="/about/icon_1.png"
-              alt="Icon 1"
-              width={60}
-              height={60}
-            />
+          <div className="animated-icons">
+            <div className="animated-icon icon-1">
+              <Image
+                src="/about/nextjs.svg"
+                alt="nextjs"
+                width={60}
+                height={60}
+              />
+            </div>
+            <div className="animated-icon icon-2">
+              <Image src="/about/ts.svg" alt="ts" width={60} height={60} />
+            </div>
+            <div className="animated-icon icon-4">
+              <Image src="/about/gsap.svg" alt="gsap" width={60} height={60} />
+            </div>
+            <div className="animated-icon icon-3">
+              <Image
+                src="/about/react.svg"
+                alt="react"
+                width={60}
+                height={60}
+              />
+            </div>
+            <div className="animated-icon icon-5">
+              <Image
+                src="/about/sb.svg"
+                alt="Spring Boot"
+                width={60}
+                height={60}
+              />
+            </div>
           </div>
-          <div className="animated-icon icon-2">
-            <Image
-              src="/about/icon_2.png"
-              alt="Icon 2"
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="animated-icon icon-3">
-            <Image
-              src="/about/icon_3.png"
-              alt="Icon 3"
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="animated-icon icon-4">
-            <Image
-              src="/about/icon_4.png"
-              alt="Icon 4"
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="animated-icon icon-5">
-            <Image
-              src="/about/icon_5.png"
-              alt="Icon 5"
-              width={60}
-              height={60}
-            />
-          </div>
-        </div>
 
-        <h2 className="animated-text">
-          <span className="text-segment">Crafting</span>
-          <div className="placeholder-icon"></div>
-          <span className="text-segment">digital</span>
-          <span className="text-segment"> experiences that</span>
-          <div className="placeholder-icon"></div>
-          <span className="text-segment">blend functionality </span>
-          <span className="text-segment">with</span>
-          <div className="placeholder-icon"></div>
-          <span className="text-segment">beautiful</span>
-          <div className="placeholder-icon"></div>
-          <span className="text-segment">interface design </span>
-          <span className="text-segment">and seamless user</span>
-          <div className="placeholder-icon"></div>
-          <span className="text-segment">interactions.</span>
-        </h2>
-      </section>
-    </div>
-    <div>
-    </div>
+          <h2 className="animated-text">
+            <span className="text-segment">Crafting</span>
+            <div className="placeholder-icon"></div>
+            <span className="text-segment">digital</span>
+            <span className="text-segment"> experiences that</span>
+            <div className="placeholder-icon"></div>
+            <span className="text-segment">blend functionality </span>
+            <span className="text-segment">with</span>
+            <div className="placeholder-icon"></div>
+            <span className="text-segment">beautiful</span>
+            <div className="placeholder-icon"></div>
+            <span className="text-segment">interface design </span>
+            <span className="text-segment">and seamless user</span>
+            <div className="placeholder-icon"></div>
+            <span className="text-segment">interactions.</span>
+          </h2>
+        </section>
+      </div>
+      <div></div>
     </div>
   );
 };
