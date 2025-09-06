@@ -36,8 +36,12 @@ const AnimatedTextSection = ({
             wordContainer.className = "word";
             wordContainer.style.visibility = "hidden";
             wordContainer.style.opacity = "0";
-            wordContainer.style.transform =
-              "translate3d(25px, 15px, 0) scale(0.75)";
+            // Valores iniciales ajustados para mobile para evitar overflow
+            const isMobile = window.innerWidth <= 768;
+            const isExtraSmall = window.innerWidth <= 480;
+            const initialX = isExtraSmall ? 3 : isMobile ? 6 : 12;
+            const initialY = isExtraSmall ? 2 : isMobile ? 4 : 8;
+            wordContainer.style.transform = `translate3d(${initialX}px, ${initialY}px, 0) scale(0.75)`;
             wordContainer.style.filter = "blur(10px)";
 
             const wordText = document.createElement("span");
@@ -67,7 +71,44 @@ const AnimatedTextSection = ({
       start: "top top",
       end: `+=${window.innerHeight * 4}`,
       pinSpacing: true,
+      onStart: () => {
+        // Forzar estilos cuando se hace pin
+        container.style.padding = "0";
+        container.style.margin = "0";
+        container.style.width = "100vw";
+        container.style.maxWidth = "100vw";
+        container.style.left = "0";
+        container.style.right = "0";
+
+        // Forzar padding 0 en anime-text
+        const animeTextElement = textElement;
+        if (animeTextElement) {
+          animeTextElement.style.padding = "0";
+          animeTextElement.style.paddingLeft = "0";
+          animeTextElement.style.paddingRight = "0";
+          animeTextElement.style.paddingTop = "0";
+          animeTextElement.style.paddingBottom = "0";
+        }
+      },
       onUpdate: (self) => {
+        // Mantener estilos correctos durante la animación
+        container.style.padding = "0";
+        container.style.margin = "0";
+        container.style.width = "100vw";
+        container.style.maxWidth = "100vw";
+        container.style.left = "0";
+        container.style.right = "0";
+
+        // Mantener padding 0 en anime-text durante la animación
+        const animeTextElement = textElement;
+        if (animeTextElement) {
+          animeTextElement.style.padding = "0";
+          animeTextElement.style.paddingLeft = "0";
+          animeTextElement.style.paddingRight = "0";
+          animeTextElement.style.paddingTop = "0";
+          animeTextElement.style.paddingBottom = "0";
+        }
+
         const progress = self.progress;
         const words = Array.from(textElement.querySelectorAll(".word"));
         const totalWords = words.length;
@@ -112,8 +153,13 @@ const AnimatedTextSection = ({
             const moveProgress = Math.min(1, wordProgress * 1.2);
             const easedProgress = easeOutCubic(moveProgress);
 
-            const translateX = 25 * (1 - easedProgress);
-            const translateY = 15 * (1 - easedProgress);
+            // Reducir movimiento en dispositivos móviles para evitar overflow
+            const isMobile = window.innerWidth <= 768;
+            const isExtraSmall = window.innerWidth <= 480;
+            const translateX =
+              (isExtraSmall ? 3 : isMobile ? 6 : 12) * (1 - easedProgress);
+            const translateY =
+              (isExtraSmall ? 2 : isMobile ? 4 : 8) * (1 - easedProgress);
             const scale = 0.75 + 0.25 * easedProgress;
             const blur = 10 * Math.pow(1 - easedProgress, 2);
 
