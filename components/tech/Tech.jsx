@@ -29,9 +29,27 @@ export default function Tech() {
     const x = rect.left - containerRect.left;
     const y = rect.top - containerRect.top;
 
-    highlight.style.transform = `translate(${x}px, ${y}px)`;
-    highlight.style.width = `${rect.width}px`;
-    highlight.style.height = `${rect.height}px`;
+    // Si el highlight está oculto, posicionarlo inmediatamente sin transición
+    const isHidden = highlight.style.opacity === "0";
+
+    if (isHidden) {
+      // Deshabilitar temporalmente las transiciones
+      highlight.style.transition = "opacity 0.3s ease";
+      highlight.style.transform = `translate(${x}px, ${y}px)`;
+      highlight.style.width = `${rect.width}px`;
+      highlight.style.height = `${rect.height}px`;
+
+      // Restaurar las transiciones después de un frame
+      requestAnimationFrame(() => {
+        highlight.style.transition =
+          "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease";
+      });
+    } else {
+      highlight.style.transform = `translate(${x}px, ${y}px)`;
+      highlight.style.width = `${rect.width}px`;
+      highlight.style.height = `${rect.height}px`;
+    }
+
     highlight.style.backgroundColor = "#000000";
     highlight.style.opacity = "0.9";
   }, []);
@@ -57,8 +75,11 @@ export default function Tech() {
           targetElement = hoveredElement.closest(".grid-item");
         }
 
-        if (targetElement) {
+        if (targetElement && container.contains(targetElement)) {
           moveToElement(targetElement, highlight, container);
+        } else {
+          // Si no hay elemento válido, solo ocultar sin mover
+          highlight.style.opacity = "0";
         }
       });
     },
@@ -66,21 +87,22 @@ export default function Tech() {
   );
 
   const handleMouseLeave = useCallback(() => {
+    // Cancelar cualquier animación pendiente
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
     const highlight = highlightRef.current;
     if (highlight) {
+      // Solo cambiar la opacidad, mantener posición y tamaño
       highlight.style.opacity = "0";
     }
   }, []);
 
   const handleMouseEnter = useCallback(() => {
-    const container = containerRef.current;
-    const highlight = highlightRef.current;
-    const firstItem = container?.querySelector(".grid-item");
-
-    if (firstItem && highlight && container) {
-      moveToElement(firstItem, highlight, container);
-    }
-  }, [moveToElement]);
+    // No hacer nada automáticamente al entrar
+    // Dejar que el mousemove maneje la lógica
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;

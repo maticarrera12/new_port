@@ -1,23 +1,25 @@
 /* Tech Section */
 .tech-section {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   color: var(--light);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .tech-container {
   position: relative;
-  width: 95%;
-  max-width: none;
+  width: 100%;
+  max-width: 1200px;
   height: 80vh;
   min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .tech-grid {
@@ -139,11 +141,12 @@
 
 @media (max-width: 1024px) {
   .tech-section {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .tech-container {
-    width: 98%;
+    width: 100%;
+    max-width: 1000px;
     height: 70vh;
     min-height: 400px;
   }
@@ -161,12 +164,13 @@
 
 @media (max-width: 768px) {
   .tech-section {
-    padding: 1rem;
+    padding: 0.5rem;
     height: 100vh;
   }
 
   .tech-container {
     width: 100%;
+    max-width: 100%;
     height: 85vh;
     min-height: 500px;
   }
@@ -201,12 +205,13 @@
 
 @media (max-width: 480px) {
   .tech-section {
-    padding: 0.5rem;
+    padding: 0.25rem;
     height: 100vh;
   }
 
   .tech-container {
     width: 100%;
+    max-width: 100%;
     height: 75vh;
     min-height: 400px;
   }
