@@ -17,6 +17,9 @@ export default function Home() {
   const [showPreloader, setShowPreloader] = useState(false);
   const [loaderAnimating, setLoaderAnimating] = useState(false);
   const lenis = useLenis();
+  const imageRefs = useRef([]);
+  const gridRefs = useRef([]);
+  const heroParentRef = useRef(null);
 
   useEffect(() => {
     const hasShownLoader = sessionStorage.getItem("loaderShown");
@@ -47,6 +50,153 @@ export default function Home() {
     }
   }, [showPreloader]);
 
+  useEffect(() => {
+    const images = imageRefs.current;
+    const gridItems = gridRefs.current;
+
+    images.forEach((img, i) => {
+      if (!img) return;
+
+      const target = gridItems[i];
+      if (!target) return;
+
+      const heroParent = heroParentRef.current;
+
+      const rect = img.getBoundingClientRect();
+      const startX = rect.left;
+      const startY = rect.top;
+      const startWidth = rect.width;
+      const startHeight = rect.height;
+
+      // Obtener rotación inicial
+      const computedStyle = window.getComputedStyle(img);
+      const transform = computedStyle.transform;
+      let startRotation = 0;
+      if (transform && transform !== "none") {
+        const matrix = transform.match(/matrix\(([^)]+)\)/);
+        if (matrix) {
+          const values = matrix[1].split(",").map((v) => parseFloat(v.trim()));
+          if (values.length >= 4) {
+            startRotation = Math.atan2(values[1], values[0]) * (180 / Math.PI);
+          }
+        }
+      }
+
+      gsap.set(img, {
+        position: "fixed",
+        left: startX,
+        top: startY,
+        width: startWidth,
+        height: startHeight,
+        rotation: startRotation,
+        zIndex: 1000,
+      });
+
+      ScrollTrigger.create({
+        trigger: ".portfolio-section",
+        start: "top 70%",
+        end: "top 30%",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = gsap.utils.clamp(0, 1, self.progress);
+          const targetRect = target.getBoundingClientRect();
+          const finalX = targetRect.left;
+          const finalY = targetRect.top;
+          const finalWidth = targetRect.width;
+          const finalHeight = targetRect.height;
+
+          const currentX = gsap.utils.interpolate(startX, finalX, progress);
+          const currentY = gsap.utils.interpolate(startY, finalY, progress);
+          const currentWidth = gsap.utils.interpolate(
+            startWidth,
+            finalWidth,
+            progress
+          );
+          const currentHeight = gsap.utils.interpolate(
+            startHeight,
+            finalHeight,
+            progress
+          );
+          const currentRotation = gsap.utils.interpolate(
+            startRotation,
+            0,
+            progress
+          );
+
+          gsap.set(img, {
+            left: currentX,
+            top: currentY,
+            width: currentWidth,
+            height: currentHeight,
+            rotation: currentRotation,
+          });
+
+          // Al final absoluto del scroll
+          if (progress >= 1) {
+            target.appendChild(img);
+            gsap.set(img, {
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: "100%",
+              height: "100%",
+              rotation: 0,
+              borderRadius: "6px",
+              zIndex: 1,
+            });
+            target.style.color = "transparent";
+
+            // Asegurar que la imagen ocupe todo el div
+            const imgElement = img.querySelector("img");
+            if (imgElement) {
+              gsap.set(imgElement, {
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                borderRadius: "6px",
+                display: "block",
+                margin: 0,
+                padding: 0,
+                maxWidth: "100%",
+                maxHeight: "100%",
+                minWidth: "100%",
+                minHeight: "100%",
+              });
+            }
+          } else if (img.parentElement === target && progress < 1) {
+            heroParent.appendChild(img);
+            gsap.set(img, {
+              position: "fixed",
+              left: currentX,
+              top: currentY,
+              width: startWidth,
+              height: startHeight,
+              rotation: currentRotation,
+              zIndex: 1000,
+            });
+
+            // Restaurar la imagen interna a su tamaño original
+            const imgElement = img.querySelector("img");
+            if (imgElement) {
+              gsap.set(imgElement, {
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                position: "relative",
+              });
+            }
+
+            target.style.color = "#2980b9";
+          }
+        },
+      });
+    });
+  }, []);
+
   return (
     <>
       <Loader show={showPreloader} onComplete={handleLoaderComplete} />
@@ -56,7 +206,11 @@ export default function Home() {
       >
         {/* left - 10% */}
         <div className="flex flex-col items-center flex-[0_0_10%] relative">
-          <div className="relative  w-[210px] h-[210px] rounded-md overflow-hidden mb-12 transform -rotate-12 -translate-x-24">
+          <div
+            ref={(el) => (imageRefs.current[0] = el)}
+            className="relative  w-[210px] h-[210px] rounded-md overflow-hidden mb-12 div1"
+            style={{ transform: "rotate(-12deg) translateX(-96px)" }}
+          >
             <Image
               src="/work/ssconverso.png"
               alt="Converso"
@@ -64,10 +218,7 @@ export default function Home() {
               className="object-cover"
             />
           </div>
-          <h4
-            className="font-extrabold text-orange text-sm text-left"
-            style={{ marginTop: "8rem" }}
-          >
+          <h4>
             2024- <br /> PRESENT
           </h4>
         </div>
@@ -80,7 +231,11 @@ export default function Home() {
         </div>
         {/* right - 10% */}
         <div className="flex justify-center flex-[0_0_10%] relative">
-          <div className="relative w-[210px] h-[450px] rounded-md overflow-hidden transform rotate-12">
+          <div
+            ref={(el) => (imageRefs.current[1] = el)}
+            className="relative w-[210px] h-[450px] rounded-md overflow-hidden div6"
+            style={{ transform: "rotate(12deg)" }}
+          >
             <Image
               src="/work/ssinquirai.png"
               alt="Inquirai"
@@ -90,7 +245,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
 
       <div className="relative w-full">
         {/* Barra scroll como base */}
@@ -111,7 +265,10 @@ export default function Home() {
         {/* Contenido superpuesto sobre el scroll */}
         <div className="absolute inset-0 flex items-center justify-center gap-8 max-w-6xl mx-auto px-6 pointer-events-none">
           {/* Imagen principal */}
-          <div className="relative w-[450px] h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto transform ">
+          <div
+            ref={(el) => (imageRefs.current[2] = el)}
+            className="relative w-[450px] h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3"
+          >
             <Image
               src="/work/ssvelyo.png"
               alt="Velyo"
@@ -121,12 +278,16 @@ export default function Home() {
           </div>
 
           {/* Imagen secundaria encima de la principal */}
-          <div className="absolute left-12 -top-32 w-[140px] h-[140px] rounded-md overflow-hidden shadow-lg transform -rotate-12 pointer-events-auto z-10 translate-y-30">
+          <div
+            ref={(el) => (imageRefs.current[3] = el)}
+            className="absolute left-12 -top-32 w-[140px] h-[140px] rounded-md overflow-hidden shadow-lg pointer-events-auto z-10 div2"
+            style={{ transform: "rotate(-12deg) translateY(120px)" }}
+          >
             <Image
-              src="/work/ssvelvetpour.png"
-              alt="Mojito"
-              className="object-cover"
+              src="/work/quetedebo.png"
+              alt="Que te debo"
               fill
+              className="object-cover"
             />
           </div>
 
@@ -138,31 +299,36 @@ export default function Home() {
         </div>
       </div>
 
-
-      <div className="min-h-screen flex justify-center items-center p-16 md:p-20">
+      <div className=" flex justify-center items-center p-16 md:p-20 portfolio-section">
         <div className="max-w-6xl mx-auto m-16 relative">
           {/* Decorative Images - Floating above card */}
           <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
             <div className="relative">
-              {/* First Image - Dashboard mockup */}
-              <div className="w-48 h-32 md:w-64 md:h-40  rounded-lg shadow-lg transform rotate-3">
+              {/* First Image */}
+              <div
+                ref={(el) => (imageRefs.current[4] = el)}
+                className="w-48 h-32 md:w-64 md:h-40 rounded-lg shadow-lg div4"
+                style={{ transform: "rotate(3deg)" }}
+              >
                 <Image
                   src="/work/ssmedreserva.png"
                   alt="Dashboard mockup"
-                  className="w-full h-full object-cover rounded-lg"
-                  width={210}
-                  height={210}
+                  fill
+                  className="object-cover"
                 />
               </div>
 
-              {/* Second Image - Rotated */}
-              <div className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 rotate-12">
+              {/* Second Image */}
+              <div
+                ref={(el) => (imageRefs.current[5] = el)}
+                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div5"
+                style={{ transform: "rotate(12deg)" }}
+              >
                 <Image
-                  src="/work/quetedebo.png"
-                  alt="Mobile app mockup"
-                  className="w-full h-full object-cover rounded-lg"
-                  width={210}
-                  height={210}
+                  src="/work/ssvelvetpour.png"
+                  alt="Velvet Pour"
+                  fill
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -191,19 +357,18 @@ export default function Home() {
               <AnimatedButton label="See all my projects" route="/work" />
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* Primera fila */}
-              <div className="aspect-square bg-gray-200 rounded-xl"></div>
-
-              <div className="col-span-2 aspect-video bg-gray-200 rounded-xl"></div>
-
-              {/* Rectángulo vertical grande (ocupa dos filas) */}
-              <div className="row-span-2 bg-gray-200 rounded-xl"></div>
-
-              {/* Segunda fila */}
-              <div className="aspect-square bg-gray-200 rounded-xl"></div>
-              <div className="aspect-square bg-gray-200 rounded-xl"></div>
-              <div className="aspect-square bg-gray-200 rounded-xl"></div>
+            <div className="grid">
+              <div ref={heroParentRef} className="parent">
+                {Array(6)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      ref={(el) => (gridRefs.current[index] = el)}
+                      className={`div${index + 1}`}
+                    ></div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
