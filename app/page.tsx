@@ -194,11 +194,13 @@ export default function Home() {
 
       {/* === HERO (simplificado a lo tuyo) === */}
       <div className="relative px-8 pb-24 w-full" style={{ marginTop: "5rem" }}>
-        <div className="text-left flex flex-col justify-center w-full max-w-6xl mx-auto">
+        <div className="text-left flex flex-col justify-center w-full  mx-auto">
           <h3 className="font-light">
             Hello, I&apos;m <span className="text-orange">Matias Carrera</span>
           </h3>
-          <h1 className="font-bold">FULL STACK DEVELOPER <br/> & UI/UX DESIGNER</h1>
+          <h1 className="font-bold">
+            FULL STACK DEVELOPER <br /> & UI/UX DESIGNER
+          </h1>
         </div>
 
         {/* Imágenes posicionadas con absolute -> ahora controladas por GSAP (se setean a fixed al iniciar) */}
@@ -223,9 +225,9 @@ export default function Home() {
 
         <div
           ref={(el) => {
-            imageRefs.current[1] = el;
+            imageRefs.current[3] = el;
           }}
-          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div6"
+          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div2"
           style={{
             right: "-5rem",
             top: "10vh",
@@ -284,10 +286,13 @@ export default function Home() {
 
           <div
             ref={(el) => {
-              imageRefs.current[3] = el;
+              imageRefs.current[1] = el;
             }}
-            className="absolute left-12 -top-32 w-[140px] h-[140px] rounded-md overflow-hidden shadow-lg pointer-events-auto z-10 div2"
-            style={{ transform: "rotate(-12deg) translateY(120px)" }}
+            className="absolute w-[120px] h-[120px] rounded-md overflow-hidden div6 z-10"
+            style={{
+              transform: "rotate(-12deg)",
+              bottom: 0
+            }}
           >
             <Image
               src="/work/quetedebo.png"
