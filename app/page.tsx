@@ -134,6 +134,8 @@ export default function Home() {
               rotation: 0,
               borderRadius: "6px",
               zIndex: 1,
+              margin: 0,
+              padding: 0,
             });
             target.style.color = "transparent";
 
@@ -194,13 +196,23 @@ export default function Home() {
 
       {/* === HERO (simplificado a lo tuyo) === */}
       <div className="relative px-8 pb-24 w-full" style={{ marginTop: "5rem" }}>
-        <div className="text-left flex flex-col justify-center w-full  mx-auto">
-          <h3 className="font-light">
-            Hello, I&apos;m <span className="text-orange">Matias Carrera</span>
-          </h3>
-          <h1 className="font-bold">
-            FULL STACK DEVELOPER <br /> & UI/UX DESIGNER
-          </h1>
+        <div className="flex justify-center items-center w-full">
+          {/* Columna izquierda - 5% */}
+          <div className="w-[10%]"></div>
+
+          {/* Columna central - 90% */}
+          <div className="w-[85%] text-left flex flex-col justify-center">
+            <h3 className="font-light">
+              Hello, I&apos;m{" "}
+              <span className="text-orange">Matias Carrera</span>
+            </h3>
+            <h1 className="font-bold">
+              FULL STACK DEVELOPER <br /> & UI/UX DESIGNER
+            </h1>
+          </div>
+
+          {/* Columna derecha - 5% */}
+          <div className="w-[5%]"></div>
         </div>
 
         {/* Imágenes posicionadas con absolute -> ahora controladas por GSAP (se setean a fixed al iniciar) */}
@@ -210,7 +222,7 @@ export default function Home() {
           }}
           className="absolute w-[210px] h-[210px] rounded-md overflow-hidden div1"
           style={{
-            left: "-5rem",
+            left: "-8rem",
             top: "10vh",
             transform: "rotate(-12deg)",
           }}
@@ -225,17 +237,17 @@ export default function Home() {
 
         <div
           ref={(el) => {
-            imageRefs.current[5] = el;
+            imageRefs.current[3] = el;
           }}
-          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
+          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div2"
           style={{
-            right: "-5rem",
+            right: "-8rem",
             top: "10vh",
             transform: "rotate(6deg)",
           }}
         >
           <Image
-            src="/work/ssvelvetpour.png"
+            src="/work/ssinquirai.png"
             alt="Inquirai"
             fill
             className="image-crop-custom"
@@ -291,11 +303,11 @@ export default function Home() {
             className="absolute w-[120px] h-[120px] rounded-md overflow-hidden div6 z-10"
             style={{
               transform: "rotate(-12deg)",
-              bottom: 0
+              bottom: 0,
             }}
           >
             <Image
-              src="/work/ssinquirai.png"
+              src="/work/quetedebo.png"
               alt="Que te debo"
               fill
               className="object-cover"
@@ -331,13 +343,13 @@ export default function Home() {
 
               <div
                 ref={(el) => {
-                  imageRefs.current[3] = el;
+                  imageRefs.current[5] = el;
                 }}
-                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div2 z-10"
+                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div5 z-10"
                 style={{ transform: "rotate(12deg)" }}
               >
                 <Image
-                  src="/work/quetedebo.png"
+                  src="/work/ssvelvetpour.png"
                   alt="Velvet Pour"
                   fill
                   className="object-cover"
