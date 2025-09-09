@@ -83,7 +83,7 @@ export default function Home() {
 
       ScrollTrigger.create({
         trigger: ".portfolio-section",
-        start: "top 70%",
+        start: "top 90%",
         end: "top 10%",
         scrub: 1,
         onUpdate: (self) => {
@@ -193,137 +193,157 @@ export default function Home() {
   return (
     <>
       <Loader show={showPreloader} onComplete={handleLoaderComplete} />
-
-      {/* === HERO (simplificado a lo tuyo) === */}
-      <div className="relative px-8 pb-24 w-full" style={{ marginTop: "5rem" }}>
-        <div className="flex justify-center items-center w-full">
-          {/* Columna izquierda - 5% */}
-          <div className="w-[10%]"></div>
-
-          {/* Columna central - 90% */}
-          <div className="w-[85%] text-left flex flex-col justify-center">
-            <h3 className="font-light">
-              Hello, I&apos;m{" "}
-              <span className="text-orange">Matias Carrera</span>
-            </h3>
-            <h1 className="font-bold">
-              FULL STACK DEVELOPER <br /> & UI/UX DESIGNER
-            </h1>
-          </div>
-
-          {/* Columna derecha - 5% */}
-          <div className="w-[5%]"></div>
-        </div>
-
-        {/* Imágenes posicionadas con absolute -> ahora controladas por GSAP (se setean a fixed al iniciar) */}
+      <div className="w-full min-h-screen flex flex-col justify-between">
+        {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          ref={(el) => {
-            imageRefs.current[0] = el;
-          }}
-          className="absolute w-[210px] h-[210px] rounded-md overflow-hidden div1"
-          style={{
-            left: "-8rem",
-            top: "10vh",
-            transform: "rotate(-12deg)",
-          }}
+          className="relative px-8 pb-24 w-full"
+          style={{ marginTop: "5rem" }}
         >
-          <Image
-            src="/work/ssconverso.png"
-            alt="Converso"
-            fill
-            className="object-cover"
-          />
-        </div>
+          <div className="flex justify-center items-center w-full">
+            {/* Columna izquierda - 5% */}
 
-        <div
-          ref={(el) => {
-            imageRefs.current[5] = el;
-          }}
-          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
-          style={{
-            right: "-8rem",
-            top: "10vh",
-            transform: "rotate(6deg)",
-          }}
-        >
-          <Image
-            src="/work/ssvelvetpour.png"
-            alt="Velvet Pour"
-            fill
-            className="image-crop-custom"
-          />
-        </div>
-
-        <h4
-          className="absolute text-orange font-extrabold"
-          style={{
-            left: "2rem",
-            bottom: "2rem",
-          }}
-        >
-          2024- <br /> PRESENT
-        </h4>
-      </div>
-
-      {/* MARQUEE */}
-      <div className="relative w-full">
-        <div className="bg-black w-full overflow-hidden relative h-12 flex items-center">
-          <div className="animate-scroll-horizontal whitespace-nowrap">
-            {Array.from({ length: 20 }, (_, i) => (
-              <span
-                key={i}
-                className="text-white inline-block mr-12"
-                style={{ marginRight: "48px" }}
+            <div className="w-[5%]">
+              <h4
+                className="absolute text-orange font-extrabold"
+                style={{
+                  left: "2rem",
+                  bottom: "2rem",
+                }}
               >
-                MCARRERA // &copy; {new Date().getFullYear()}
-              </span>
-            ))}
+                2024- <br /> PRESENT
+              </h4>
+            </div>
+
+            {/* Columna central - 90% */}
+            <div className="w-[90%] text-left flex flex-col justify-center mt-72">
+              <h3 className="font-light">
+                Hello, I&apos;m{" "}
+                <span className="text-orange">Matias Carrera</span>
+              </h3>
+              <h1 className="font-bold">
+                FULL-STACK DEVELOPER <br /> & UI/UX DESIGNER
+              </h1>
+            </div>
+
+            {/* Columna derecha - 5% */}
+            <div className="w-[5%]"></div>
+          </div>
+
+          {/* Imágenes posicionadas con absolute -> ahora controladas por GSAP (se setean a fixed al iniciar) */}
+          <div
+            ref={(el) => {
+              imageRefs.current[0] = el;
+            }}
+            className="absolute w-[210px] h-[210px] rounded-md overflow-hidden div1"
+            style={{
+              left: "-8rem",
+              top: "2vh",
+              transform: "rotate(-12deg)",
+            }}
+          >
+            <Image
+              src="/work/ssconverso.png"
+              alt="Converso"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          <div
+            ref={(el) => {
+              imageRefs.current[5] = el;
+            }}
+            className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
+            style={{
+              right: "-5rem",
+              top: "2vh",
+              transform: "rotate(6deg)",
+            }}
+          >
+            <Image
+              src="/work/ssvelvetpour.png"
+              alt="Velvet Pour"
+              fill
+              className="image-crop-custom"
+            />
           </div>
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center gap-8 max-w-6xl mx-auto px-6 pointer-events-none">
-          <div
-            ref={(el) => {
-              imageRefs.current[2] = el;
-            }}
-            className="relative w-[450px] h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
-          >
-            <Image
-              src="/work/ssvelyo.png"
-              alt="Velyo"
-              className="object-cover"
-              fill
-            />
+        {/* MARQUEE */}
+        <div className="relative w-full">
+          <div className="bg-black w-full overflow-hidden relative h-12 flex items-center">
+            <div className="animate-scroll-horizontal whitespace-nowrap">
+              {Array.from({ length: 20 }, (_, i) => (
+                <span
+                  key={i}
+                  className="text-white inline-block mr-12"
+                  style={{ marginRight: "48px" }}
+                >
+                  MCARRERA // &copy; {new Date().getFullYear()}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div
-            ref={(el) => {
-              imageRefs.current[1] = el;
-            }}
-            className="absolute w-[120px] h-[120px] rounded-md overflow-hidden div6 z-10"
-            style={{
-              transform: "rotate(-12deg)",
-              bottom: 0,
-            }}
-          >
-            <Image
-              src="/work/quetedebo.png"
-              alt="Que te debo"
-              fill
-              className="object-cover"
-            />
+          {/* Imágenes por encima de la banda negra */}
+          <div className="absolute inset-0 flex items-center justify-between max-w-6xl mx-auto px-6 pointer-events-none">
+            {/* Lado izquierdo - Imágenes */}
+            <div className="flex items-center gap-8 relative">
+              <div
+                ref={(el) => {
+                  imageRefs.current[2] = el;
+                }}
+                className="relative w-[225px] h-[105px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
+              >
+                <Image
+                  src="/work/ssvelyo.png"
+                  alt="Velyo"
+                  className="object-cover"
+                  fill
+                />
+              </div>
+
+              <div
+                ref={(el) => {
+                  imageRefs.current[1] = el;
+                }}
+                className="absolute w-[120px] h-[120px] rounded-md overflow-hidden div6 z-10"
+                style={{
+                  transform: "rotate(-12deg)",
+                  bottom: 0,
+                }}
+              >
+                <Image
+                  src="/work/quetedebo.png"
+                  alt="Que te debo"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Lado derecho vacío para balance */}
+            <div className="w-1/2"></div>
           </div>
 
-          <p className="text-orange font-extrabold max-w-[350px] text-sm leading-tight pointer-events-auto translate-y-20 translate-x-70">
-            FULL STACK DEVELOPER WITH A PASSION FOR CRAFTING SEAMLESS AND
-            ENGAGING DIGITAL EXPERIENCES.
-          </p>
+          {/* Texto debajo de la banda negra */}
+          <div className="flex max-w-6xl mx-auto px-6 py-8">
+            {/* Espacio para la mitad izquierda */}
+            <div className="w-1/2"></div>
+            {/* Texto en la mitad derecha, posicionado a la derecha pero alineado a la izquierda */}
+            <div className="w-1/2 flex justify-end">
+              <p className="text-orange font-extrabold max-w-[150px] text-sm leading-tight text-left">
+                FULL STACK DEVELOPER WITH A PASSION FOR CRAFTING SEAMLESS AND
+                ENGAGING DIGITAL EXPERIENCES.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* PORTFOLIO */}
-      <div className="flex justify-center items-center p-16 md:p-20 portfolio-section">
-        <div className="max-w-6xl mx-auto m-16 relative">
+      <div className="flex justify-center items-center portfolio-section mt-16">
+        <div className="w-[95%] max-w-6xl mx-auto relative">
           <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
             <div className="relative">
               <div
@@ -335,7 +355,7 @@ export default function Home() {
               >
                 <Image
                   src="/work/ssmedreserva.png"
-                  alt="Dashboard mockup"
+                  alt="MedReservA"
                   fill
                   className="object-cover"
                 />
@@ -350,7 +370,7 @@ export default function Home() {
               >
                 <Image
                   src="/work/ssinquirai.png"
-                  alt="Velvet Pour"
+                  alt="Inquirai"
                   fill
                   className="object-cover"
                 />
@@ -358,8 +378,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12 mt-16 md:mt-20">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+          <div className="bg-white rounded-4xl shadow-2xl p-8">
+            <div className="flex flex-row items-start p-2 items-center gap-4 mb-8">
               <Avatar className="w-16 h-16 md:w-20 md:h-20">
                 <AvatarImage src="/mcanimated.png" />
                 <AvatarFallback className="bg-gray-200 text-gray-600 text-xl font-semibold">
@@ -376,7 +396,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <AnimatedButton label="See all my projects" route="/work" />
+              <AnimatedButton label="See all" route="/work" />
             </div>
 
             <div className="grid">
@@ -390,7 +410,9 @@ export default function Home() {
                         gridRefs.current[index] = el;
                       }}
                       className={`div${index + 1}`}
-                    ></div>
+                    >
+                      {index + 1}
+                    </div>
                   ))}
               </div>
             </div>

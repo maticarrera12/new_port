@@ -93,7 +93,9 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en">
         <body className={`${anton.variable} ${satoshi.variable} antialiased`}>
-          <ClientLayout>{children}</ClientLayout>
+          <div className="w-full">
+            <ClientLayout>{children}</ClientLayout>
+          </div>
         </body>
       </html>
     </ViewTransitions>
