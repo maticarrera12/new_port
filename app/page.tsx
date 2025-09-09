@@ -237,9 +237,9 @@ export default function Home() {
 
         <div
           ref={(el) => {
-            imageRefs.current[3] = el;
+            imageRefs.current[5] = el;
           }}
-          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div2"
+          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
           style={{
             right: "-8rem",
             top: "10vh",
@@ -247,8 +247,8 @@ export default function Home() {
           }}
         >
           <Image
-            src="/work/ssinquirai.png"
-            alt="Inquirai"
+            src="/work/ssvelvetpour.png"
+            alt="Velvet Pour"
             fill
             className="image-crop-custom"
           />
@@ -343,13 +343,13 @@ export default function Home() {
 
               <div
                 ref={(el) => {
-                  imageRefs.current[5] = el;
+                  imageRefs.current[3] = el;
                 }}
-                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div5 z-10"
+                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div2 z-10"
                 style={{ transform: "rotate(12deg)" }}
               >
                 <Image
-                  src="/work/ssvelvetpour.png"
+                  src="/work/ssinquirai.png"
                   alt="Velvet Pour"
                   fill
                   className="object-cover"
