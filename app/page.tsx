@@ -119,7 +119,7 @@ export default function Home() {
             width: currentWidth,
             height: currentHeight,
             rotation: currentRotation,
-            zIndex: 1000,
+            zIndex: 999,
           });
 
           // Al final absoluto del scroll
@@ -169,7 +169,7 @@ export default function Home() {
               width: currentWidth,
               height: currentHeight,
               rotation: currentRotation,
-              zIndex: 1000,
+              zIndex: 999,
             });
 
             // Restaurar la imagen interna a su tamaño original
@@ -215,7 +215,7 @@ export default function Home() {
             </div>
 
             {/* Columna central - 90% */}
-            <div className="w-[90%] text-left flex flex-col justify-center mt-72">
+            <div className="w-[90%] text-left flex flex-col justify-center mt-72 md:mt-0">
               <h3 className="font-light">
                 Hello, I&apos;m{" "}
                 <span className="text-orange">Matias Carrera</span>
@@ -286,14 +286,14 @@ export default function Home() {
           </div>
 
           {/* Imágenes por encima de la banda negra */}
-          <div className="absolute inset-0 flex items-center justify-between max-w-6xl mx-auto px-6 pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-start max-w-6xl mx-auto pl-2 pr-6 pointer-events-none">
             {/* Lado izquierdo - Imágenes */}
             <div className="flex items-center gap-8 relative">
               <div
                 ref={(el) => {
                   imageRefs.current[2] = el;
                 }}
-                className="relative w-[225px] h-[105px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
+                className="relative w-[225px] h-[105px] md:w-[450px] md:h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
               >
                 <Image
                   src="/work/ssvelyo.png"
@@ -321,9 +321,6 @@ export default function Home() {
                 />
               </div>
             </div>
-
-            {/* Lado derecho vacío para balance */}
-            <div className="w-1/2"></div>
           </div>
 
           {/* Texto debajo de la banda negra */}
@@ -332,7 +329,7 @@ export default function Home() {
             <div className="w-1/2"></div>
             {/* Texto en la mitad derecha, posicionado a la derecha pero alineado a la izquierda */}
             <div className="w-1/2 flex justify-end">
-              <p className="text-orange font-extrabold max-w-[150px] text-sm leading-tight text-left">
+              <p className="text-orange font-extrabold max-w-[150px] md:max-w-[450px] text-sm leading-tight text-left">
                 FULL STACK DEVELOPER WITH A PASSION FOR CRAFTING SEAMLESS AND
                 ENGAGING DIGITAL EXPERIENCES.
               </p>
@@ -379,7 +376,7 @@ export default function Home() {
           </div>
 
           <div className="bg-white rounded-4xl shadow-2xl p-8">
-            <div className="flex flex-row items-start p-2 items-center gap-4 mb-8">
+            <div className="flex flex-row items-center p-2 gap-4 mb-8">
               <Avatar className="w-16 h-16 md:w-20 md:h-20">
                 <AvatarImage src="/mcanimated.png" />
                 <AvatarFallback className="bg-gray-200 text-gray-600 text-xl font-semibold">
@@ -410,9 +407,7 @@ export default function Home() {
                         gridRefs.current[index] = el;
                       }}
                       className={`div${index + 1}`}
-                    >
-                      {index + 1}
-                    </div>
+                    ></div>
                   ))}
               </div>
             </div>
