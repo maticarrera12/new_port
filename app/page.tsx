@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CustomEase from "gsap/CustomEase";
@@ -10,26 +10,29 @@ import Tech from "../components/tech/Tech";
 import Image from "next/image";
 import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
+
 export default function Home() {
-  const tagsRef = useRef(null);
   const [showPreloader, setShowPreloader] = useState(false);
   const [loaderAnimating, setLoaderAnimating] = useState(false);
   const lenis = useLenis();
-  const imageRefs = useRef([]);
-  const gridRefs = useRef([]);
-  const heroParentRef = useRef(null);
 
-  useEffect(() => {
-    const hasShownLoader = sessionStorage.getItem("loaderShown");
-    if (!hasShownLoader) {
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const heroParentRef = useRef<HTMLDivElement | null>(null);
+
+  // Preloader simple
+  useLayoutEffect(() => {
+    const shown = sessionStorage.getItem("loaderShown");
+    if (!shown) {
       setShowPreloader(true);
       sessionStorage.setItem("loaderShown", "true");
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (lenis) {
       if (loaderAnimating) {
         lenis.stop();
@@ -44,13 +47,9 @@ export default function Home() {
     setShowPreloader(false);
   };
 
-  useEffect(() => {
-    if (showPreloader) {
-      setLoaderAnimating(true);
-    }
-  }, [showPreloader]);
+  useLayoutEffect(() => {
+    if (showPreloader) return;
 
-  useEffect(() => {
     const images = imageRefs.current;
     const gridItems = gridRefs.current;
 
@@ -82,20 +81,10 @@ export default function Home() {
         }
       }
 
-      gsap.set(img, {
-        position: "fixed",
-        left: startX,
-        top: startY,
-        width: startWidth,
-        height: startHeight,
-        rotation: startRotation,
-        zIndex: 1000,
-      });
-
       ScrollTrigger.create({
         trigger: ".portfolio-section",
         start: "top 70%",
-        end: "top 30%",
+        end: "top 10%",
         scrub: 1,
         onUpdate: (self) => {
           const progress = gsap.utils.clamp(0, 1, self.progress);
@@ -124,11 +113,13 @@ export default function Home() {
           );
 
           gsap.set(img, {
+            position: "fixed",
             left: currentX,
             top: currentY,
             width: currentWidth,
             height: currentHeight,
             rotation: currentRotation,
+            zIndex: 1000,
           });
 
           // Al final absoluto del scroll
@@ -168,13 +159,13 @@ export default function Home() {
               });
             }
           } else if (img.parentElement === target && progress < 1) {
-            heroParent.appendChild(img);
+            heroParent?.appendChild(img);
             gsap.set(img, {
               position: "fixed",
               left: currentX,
               top: currentY,
-              width: startWidth,
-              height: startHeight,
+              width: currentWidth,
+              height: currentHeight,
               rotation: currentRotation,
               zIndex: 1000,
             });
@@ -195,59 +186,73 @@ export default function Home() {
         },
       });
     });
-  }, []);
+  }, [showPreloader]);
 
   return (
     <>
       <Loader show={showPreloader} onComplete={handleLoaderComplete} />
-      <div
-        className="flex px-8 pb-24 w-full gap-6 justify-between"
-        style={{ marginTop: "5rem" }}
-      >
-        {/* left - 10% */}
-        <div className="flex flex-col items-center flex-[0_0_10%] relative">
-          <div
-            ref={(el) => (imageRefs.current[0] = el)}
-            className="relative  w-[210px] h-[210px] rounded-md overflow-hidden mb-12 div1"
-            style={{ transform: "rotate(-12deg) translateX(-96px)" }}
-          >
-            <Image
-              src="/work/ssconverso.png"
-              alt="Converso"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <h4>
-            2024- <br /> PRESENT
-          </h4>
-        </div>
-        {/* center - 80% */}
-        <div className="text-left flex flex-col justify-center flex-[0_0_80%]">
+
+      {/* === HERO (simplificado a lo tuyo) === */}
+      <div className="relative px-8 pb-24 w-full" style={{ marginTop: "5rem" }}>
+        <div className="text-left flex flex-col justify-center w-full max-w-6xl mx-auto">
           <h3 className="font-light">
             Hello, I&apos;m <span className="text-orange">Matias Carrera</span>
           </h3>
-          <h1 className="font-bold">FULL STACK DEVELOPER & UI/UX DESIGNER</h1>
+          <h1 className="font-bold">FULL STACK DEVELOPER <br/> & UI/UX DESIGNER</h1>
         </div>
-        {/* right - 10% */}
-        <div className="flex justify-center flex-[0_0_10%] relative">
-          <div
-            ref={(el) => (imageRefs.current[1] = el)}
-            className="relative w-[210px] h-[450px] rounded-md overflow-hidden div6"
-            style={{ transform: "rotate(12deg)" }}
-          >
-            <Image
-              src="/work/ssinquirai.png"
-              alt="Inquirai"
-              fill
-              className="image-crop-custom"
-            />
-          </div>
+
+        {/* Imágenes posicionadas con absolute -> ahora controladas por GSAP (se setean a fixed al iniciar) */}
+        <div
+          ref={(el) => {
+            imageRefs.current[0] = el;
+          }}
+          className="absolute w-[210px] h-[210px] rounded-md overflow-hidden div1"
+          style={{
+            left: "-5rem",
+            top: "10vh",
+            transform: "rotate(-12deg)",
+          }}
+        >
+          <Image
+            src="/work/ssconverso.png"
+            alt="Converso"
+            fill
+            className="object-cover"
+          />
         </div>
+
+        <div
+          ref={(el) => {
+            imageRefs.current[1] = el;
+          }}
+          className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div6"
+          style={{
+            right: "-5rem",
+            top: "10vh",
+            transform: "rotate(6deg)",
+          }}
+        >
+          <Image
+            src="/work/ssinquirai.png"
+            alt="Inquirai"
+            fill
+            className="image-crop-custom"
+          />
+        </div>
+
+        <h4
+          className="absolute text-orange font-extrabold"
+          style={{
+            left: "2rem",
+            bottom: "2rem",
+          }}
+        >
+          2024- <br /> PRESENT
+        </h4>
       </div>
 
+      {/* MARQUEE */}
       <div className="relative w-full">
-        {/* Barra scroll como base */}
         <div className="bg-black w-full overflow-hidden relative h-12 flex items-center">
           <div className="animate-scroll-horizontal whitespace-nowrap">
             {Array.from({ length: 20 }, (_, i) => (
@@ -262,12 +267,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Contenido superpuesto sobre el scroll */}
         <div className="absolute inset-0 flex items-center justify-center gap-8 max-w-6xl mx-auto px-6 pointer-events-none">
-          {/* Imagen principal */}
           <div
-            ref={(el) => (imageRefs.current[2] = el)}
-            className="relative w-[450px] h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3"
+            ref={(el) => {
+              imageRefs.current[2] = el;
+            }}
+            className="relative w-[450px] h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
           >
             <Image
               src="/work/ssvelyo.png"
@@ -277,9 +282,10 @@ export default function Home() {
             />
           </div>
 
-          {/* Imagen secundaria encima de la principal */}
           <div
-            ref={(el) => (imageRefs.current[3] = el)}
+            ref={(el) => {
+              imageRefs.current[3] = el;
+            }}
             className="absolute left-12 -top-32 w-[140px] h-[140px] rounded-md overflow-hidden shadow-lg pointer-events-auto z-10 div2"
             style={{ transform: "rotate(-12deg) translateY(120px)" }}
           >
@@ -291,23 +297,23 @@ export default function Home() {
             />
           </div>
 
-          {/* Texto a la derecha */}
-          <p className="text-orange font-extrabold max-w-[350px] text-sm leading-tight pointer-events-auto translate-y-20">
+          <p className="text-orange font-extrabold max-w-[350px] text-sm leading-tight pointer-events-auto translate-y-20 translate-x-70">
             FULL STACK DEVELOPER WITH A PASSION FOR CRAFTING SEAMLESS AND
             ENGAGING DIGITAL EXPERIENCES.
           </p>
         </div>
       </div>
 
-      <div className=" flex justify-center items-center p-16 md:p-20 portfolio-section">
+      {/* PORTFOLIO */}
+      <div className="flex justify-center items-center p-16 md:p-20 portfolio-section">
         <div className="max-w-6xl mx-auto m-16 relative">
-          {/* Decorative Images - Floating above card */}
           <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
             <div className="relative">
-              {/* First Image */}
               <div
-                ref={(el) => (imageRefs.current[4] = el)}
-                className="w-48 h-32 md:w-64 md:h-40 rounded-lg shadow-lg div4"
+                ref={(el) => {
+                  imageRefs.current[4] = el;
+                }}
+                className="w-48 h-32 md:w-64 md:h-40 rounded-lg shadow-lg div4 z-1"
                 style={{ transform: "rotate(3deg)" }}
               >
                 <Image
@@ -318,10 +324,11 @@ export default function Home() {
                 />
               </div>
 
-              {/* Second Image */}
               <div
-                ref={(el) => (imageRefs.current[5] = el)}
-                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div5"
+                ref={(el) => {
+                  imageRefs.current[5] = el;
+                }}
+                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div5 z-10"
                 style={{ transform: "rotate(12deg)" }}
               >
                 <Image
@@ -334,9 +341,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Main Portfolio Card */}
           <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12 mt-16 md:mt-20">
-            {/* Profile Section */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
               <Avatar className="w-16 h-16 md:w-20 md:h-20">
                 <AvatarImage src="/mcanimated.png" />
@@ -364,7 +369,9 @@ export default function Home() {
                   .map((_, index) => (
                     <div
                       key={index}
-                      ref={(el) => (gridRefs.current[index] = el)}
+                      ref={(el) => {
+                        gridRefs.current[index] = el;
+                      }}
                       className={`div${index + 1}`}
                     ></div>
                   ))}
@@ -374,6 +381,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Texts, Tech, etc */}
       <AnimatedText
         sections={[
           {
