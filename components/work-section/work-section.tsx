@@ -59,7 +59,9 @@ export default function WorkSection() {
     const workSection = workSectionRef.current
     const textContainer = textContainerRef.current
     const gridCanvas = gridCanvasRef.current
-    const moveDistance = window.innerWidth * 6
+    // Calcular distancia de movimiento basada en el tamaño de pantalla
+    const isMobile = window.innerWidth <= 768
+    const moveDistanceRef = { current: isMobile ? window.innerWidth * 4.2 : window.innerWidth * 6.5 }
     let currentXPosition = 0
 
     const lerp = (start: number, end: number, t: number) => start + (end - start) * t
@@ -199,7 +201,7 @@ export default function WorkSection() {
     }
 
     const updateCardsPosition = () => {
-      const targetX = -moveDistance * (ScrollTrigger.getAll()[0]?.progress || 0)
+      const targetX = -moveDistanceRef.current * (ScrollTrigger.getAll()[0]?.progress || 0)
       currentXPosition = lerp(currentXPosition, targetX, 0.07)
       gsap.set(cardsContainer, {
         x: currentXPosition,
@@ -217,7 +219,7 @@ export default function WorkSection() {
     ScrollTrigger.create({
       trigger: workSection,
       start: "top top",
-      end: "+=800%",
+      end: isMobile ? "+=500%" : "+=850%",
       pin: true,
       pinSpacing: true,
       scrub: 1,
@@ -246,6 +248,10 @@ export default function WorkSection() {
       lettersRenderer.setSize(window.innerWidth, window.innerHeight)
       updateTargetPositions(ScrollTrigger.getAll()[0]?.progress || 0)
       updateLetterSizes()
+      
+      // Recalcular distancia de movimiento para el nuevo tamaño de pantalla
+      const newIsMobile = window.innerWidth <= 768
+      moveDistanceRef.current = newIsMobile ? window.innerWidth * 4.2 : window.innerWidth * 6.5
     }
 
     window.addEventListener("resize", handleResize)

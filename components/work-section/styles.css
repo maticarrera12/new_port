@@ -83,6 +83,12 @@ canvas {
   z-index: 10;
 }
 
+@media (max-width: 768px) {
+  .cards {
+    width: 400vw;
+  }
+}
+
 .card {
   width: 20%;
   height: 50%;
