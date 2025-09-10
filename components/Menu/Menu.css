@@ -8,7 +8,7 @@ nav {
   display: flex;
   justify-content: space-between;
   mix-blend-mode: difference;
-  z-index: 1001 !important;
+  z-index: 1002 !important;
 }
 
 nav p {
@@ -47,7 +47,7 @@ nav section {
   overflow: hidden;
   background-color: var(--dark);
   color: var(--light);
-  z-index: 1000;
+  z-index: 1001;
   will-change: clip-path;
 }
 

@@ -62,7 +62,20 @@ export default function Home() {
       const heroParent = heroParentRef.current;
 
       const rect = img.getBoundingClientRect();
-      const startX = rect.left;
+      
+      // Para la imagen de Velvet Pour (índice 5), calcular la posición left equivalente
+      let startX = rect.left;
+      if (i === 5) {
+        // Si está posicionada con right, calcular left equivalente
+        const computedStyle = window.getComputedStyle(img);
+        const rightValue = computedStyle.right;
+        if (rightValue && rightValue !== 'auto') {
+          // Calcular left basado en right
+          const rightPx = parseFloat(rightValue.replace('px', ''));
+          startX = window.innerWidth - rect.width - rightPx;
+        }
+      }
+      
       const startY = rect.top;
       const startWidth = rect.width;
       const startHeight = rect.height;
@@ -80,6 +93,44 @@ export default function Home() {
           }
         }
       }
+
+      // Función para recalcular startX en resize (solo para Velvet Pour)
+      const recalculateStartX = () => {
+        if (i === 5) {
+          const rect = img.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(img);
+          const rightValue = computedStyle.right;
+          if (rightValue && rightValue !== 'auto') {
+            const rightPx = parseFloat(rightValue.replace('px', ''));
+            startX = window.innerWidth - rect.width - rightPx;
+          }
+        }
+      };
+
+      // Función para reposicionar la imagen en su posición original
+      const repositionToOriginal = () => {
+        if (i === 5) {
+          // Solo reposicionar si no está en el grid
+          const isInGrid = img.parentElement?.classList.contains('parent');
+          if (!isInGrid) {
+            gsap.set(img, {
+              position: "fixed",
+              right: "-6rem",
+              top: "2vh",
+              transform: "rotate(6deg)",
+              zIndex: 999,
+            });
+          }
+        }
+      };
+
+      // Listener para resize
+      const handleResize = () => {
+        recalculateStartX();
+        repositionToOriginal();
+      };
+
+      window.addEventListener('resize', handleResize);
 
       ScrollTrigger.create({
         trigger: ".portfolio-section",
@@ -162,15 +213,29 @@ export default function Home() {
             }
           } else if (img.parentElement === target && progress < 1) {
             heroParent?.appendChild(img);
-            gsap.set(img, {
-              position: "fixed",
-              left: currentX,
-              top: currentY,
-              width: currentWidth,
-              height: currentHeight,
-              rotation: currentRotation,
-              zIndex: 999,
-            });
+            
+            // Para Velvet Pour (índice 5), usar posicionamiento right
+            if (i === 5) {
+              gsap.set(img, {
+                position: "fixed",
+                right: "-6rem",
+                top: currentY,
+                width: currentWidth,
+                height: currentHeight,
+                rotation: currentRotation,
+                zIndex: 999,
+              });
+            } else {
+              gsap.set(img, {
+                position: "fixed",
+                left: currentX,
+                top: currentY,
+                width: currentWidth,
+                height: currentHeight,
+                rotation: currentRotation,
+                zIndex: 999,
+              });
+            }
 
             // Restaurar la imagen interna a su tamaño original
             const imgElement = img.querySelector("img");
@@ -186,6 +251,10 @@ export default function Home() {
             target.style.color = "#2980b9";
           }
         },
+        onKill: () => {
+          // Limpiar listener cuando se destruya
+          window.removeEventListener('resize', handleResize);
+        }
       });
     });
   }, [showPreloader]);
@@ -216,11 +285,11 @@ export default function Home() {
 
             {/* Columna central - 90% */}
             <div className="w-[90%] text-left flex flex-col justify-center mt-72 md:mt-0">
-              <h3 className="font-light">
+              <h3 className="font-light z-1000">
                 Hello, I&apos;m{" "}
                 <span className="text-orange">Matias Carrera</span>
               </h3>
-              <h1 className="font-bold">
+              <h1 className="font-bold z-1000">
                 FULL-STACK DEVELOPER <br /> & UI/UX DESIGNER
               </h1>
             </div>
@@ -293,7 +362,7 @@ export default function Home() {
                 ref={(el) => {
                   imageRefs.current[2] = el;
                 }}
-                className="relative w-[200px] h-[105px] md:w-[450px] md:h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
+                className="relative w-[200px] h-[105px] lg:w-[450px] lg:h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
               >
                 <Image
                   src="/work/ssvelyo.png"
