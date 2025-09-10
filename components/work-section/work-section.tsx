@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Lenis from "@studio-freight/lenis"
 import "./styles.css"
 import Image from "next/image"
+import { projects } from '../../app/assets/assets.js'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -21,12 +22,28 @@ export default function WorkSection() {
   const textContainerRef = useRef<HTMLDivElement>(null)
   const gridCanvasRef = useRef<HTMLCanvasElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
   const [isWorkSectionActive, setIsWorkSectionActive] = useState(false)
 
   useEffect(() => {
     if (!workSectionRef.current || !cardsContainerRef.current || !textContainerRef.current || !gridCanvasRef.current)
       return
+
+    // Agregar funcionalidad de click a las tarjetas
+    const handleCardClick = (e: Event) => {
+      const target = e.currentTarget as HTMLElement
+      const projectLink = target.getAttribute('data-project-link')
+      if (projectLink && projectLink !== '#') {
+        window.open(projectLink, '_blank')
+      }
+    }
+
+    // Agregar event listeners a las tarjetas existentes
+    const cardsContainer = cardsContainerRef.current
+    const cards = cardsContainer?.querySelectorAll('.card')
+    cards?.forEach(card => {
+      card.addEventListener('click', handleCardClick)
+    })
 
     // Initialize Lenis smooth scrolling
     const lenis = new Lenis({
@@ -40,10 +57,9 @@ export default function WorkSection() {
     gsap.ticker.lagSmoothing(0)
 
     const workSection = workSectionRef.current
-    const cardsContainer = cardsContainerRef.current
     const textContainer = textContainerRef.current
     const gridCanvas = gridCanvasRef.current
-    const moveDistance = window.innerWidth * 5
+    const moveDistance = window.innerWidth * 6
     let currentXPosition = 0
 
     const lerp = (start: number, end: number, t: number) => start + (end - start) * t
@@ -201,7 +217,7 @@ export default function WorkSection() {
     ScrollTrigger.create({
       trigger: workSection,
       start: "top top",
-      end: "+=700%",
+      end: "+=800%",
       pin: true,
       pinSpacing: true,
       scrub: 1,
@@ -271,6 +287,12 @@ export default function WorkSection() {
         }
       })
 
+      // Clean up card event listeners
+      const cardsToCleanup = cardsContainer?.querySelectorAll('.card')
+      cardsToCleanup?.forEach(card => {
+        card.removeEventListener('click', handleCardClick)
+      })
+
       window.removeEventListener("resize", handleResize)
     }
   }, [])
@@ -299,111 +321,25 @@ export default function WorkSection() {
         />
         <div className="text-container" ref={textContainerRef}></div>
         <div className="cards" ref={cardsContainerRef}>
-                      <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img1.jpg" 
-                alt="Eclipse Horizon project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
+          {projects.map((project, index) => (
+            <div key={index} className="card" data-project-link={project.projectLink}>
+              <div className="card-img">
+                <Image 
+                  src={project.image} 
+                  alt={`${project.title} project`} 
+                  fill
+                  style={{ 
+                    objectFit: 'cover',
+                    objectPosition: 'center'
+                  }}
+                  sizes="(max-width: 480px) 60vw, (max-width: 768px) 45vw, (max-width: 1200px) 35vw, 30vw"
+                  quality={100}
+                  priority={false}
+                  unoptimized={true}
+                />
+              </div>
             </div>
-            <div className="card-copy">
-              <p>Eclipse Horizon</p>
-              <p>739284</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img2.jpg" 
-                alt="Vision Link project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Vision Link</p>
-              <p>385912</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img3.jpg" 
-                alt="Iron Bond project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Iron Bond</p>
-              <p>621478</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img4.jpg" 
-                alt="Golden Case project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Golden Case</p>
-              <p>839251</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img5.jpg" 
-                alt="Virtual Space project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Virtual Space</p>
-              <p>456732</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img6.jpg" 
-                alt="Smart Vision project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Smart Vision</p>
-              <p>974315</p>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-img">
-              <Image 
-                src="/work/img7.jpg" 
-                alt="Desert Tunnel project" 
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 480px) 20vw, (max-width: 768px) 15vw, (max-width: 1200px) 12vw, 10vw"
-              />
-            </div>
-            <div className="card-copy">
-              <p>Desert Tunnel</p>
-              <p>621943</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>
