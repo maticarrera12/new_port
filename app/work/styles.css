@@ -31,13 +31,6 @@ section {
   color: #000;
 }
 
-.intro h1,
-.outro h1 {
-  font-family: "GR NORCH";
-  font-size: 5vw;
-  font-weight: lighter;
-  text-transform: uppercase;
-}
 
 .outro {
   top: -0.125em;

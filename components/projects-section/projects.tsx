@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import "./styles.css"
 import { gsap } from "gsap"
 import Lenis from "@studio-freight/lenis"
+import { projects } from '../../app/assets/assets.js'
 
 const Projects = () => {
   const lenisRef = useRef<Lenis | null>(null)
@@ -13,6 +14,9 @@ const Projects = () => {
   useEffect(() => {
     // Only run on client side
     if (typeof window === 'undefined') return
+
+    // Función para verificar si debe ejecutar animaciones
+    const shouldAnimate = () => window.innerWidth > 1024
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -32,29 +36,32 @@ const Projects = () => {
       TOP: -160,
     }
 
-    let lastMousePosition = { x: 0, y: 0 }
+    const lastMousePosition = { x: 0, y: 0 }
     let activeAward: HTMLElement | null = null
     let ticking = false
     let mouseTimeout: NodeJS.Timeout | null = null
-    let isMouseMoving = false
 
-    // Awards data - you can move this to a separate file if needed
-    const awards = [
-      { name: "Best Design", type: "2025", project: "Project Alpha", label: "See Website" },
-      { name: "Innovation", type: "2025", project: "Project Beta", label: "See Website" },
-      { name: "Excellence", type: "2025", project: "Project Gamma", label: "See Website" },
-      { name: "Creativity", type: "2025", project: "Project Delta", label: "See Website" },
-      { name: "Quality", type: "2025", project: "Project Epsilon", label: "See Website" },
-      { name: "Best Design", type: "2025", project: "Project Alpha", label: "See Website" },
-      { name: "Innovation", type: "2025", project: "Project Beta", label: "See Website" },
-      { name: "Excellence", type: "2025", project: "Project Gamma", label: "See Website" },
-      { name: "Creativity", type: "2025", project: "Project Delta", label: "See Website" }
-    ]
+    // Usar los datos reales de proyectos
+    const awards = projects.map(project => ({
+      name: project.title,
+      type: project.year || "2025",
+      project: project.title,
+      label: "See Website",
+      projectLink: project.projectLink,
+      technologies: project.technologies,
+      image: project.image
+    }))
 
     awards.forEach((award) => {
       const awardElement = document.createElement("div")
       awardElement.className = "award"
+      awardElement.setAttribute("data-project-link", award.projectLink || "#")
+      awardElement.setAttribute("data-project-image", award.image)
+      awardElement.setAttribute("data-project-technologies", JSON.stringify(award.technologies))
 
+      // Crear el HTML con las tecnologías en la fila del medio
+      const techNames = award.technologies.slice(0, 3).join(" • ") // Mostrar máximo 3 tecnologías
+      
       awardElement.innerHTML = `
         <div class="award-wrapper">
           <div class="award-name">
@@ -62,7 +69,7 @@ const Projects = () => {
             <h1>${award.type}</h1>
           </div>
           <div class="award-project">
-            <h1>${award.project}</h1>
+            <h1>${techNames || award.project}</h1>
             <h1>${award.label}</h1>
           </div>
           <div class="award-name">
@@ -98,6 +105,8 @@ const Projects = () => {
     }
 
     const updateAwards = () => {
+      if (!shouldAnimate()) return
+
       animatePreview()
 
       if (activeAward) {
@@ -133,7 +142,6 @@ const Projects = () => {
 
         if (isMouseOver) {
           const wrapper = award.querySelector(".award-wrapper") as HTMLElement
-          const enterFromTop = lastMousePosition.y < rect.top + rect.height / 2
 
           gsap.to(wrapper, {
             y: POSITIONS.MIDDLE,
@@ -148,10 +156,10 @@ const Projects = () => {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!shouldAnimate()) return
+
       lastMousePosition.x = e.clientX
       lastMousePosition.y = e.clientY
-
-      isMouseMoving = true
       if (mouseTimeout) {
         clearTimeout(mouseTimeout)
       }
@@ -165,7 +173,6 @@ const Projects = () => {
 
       if (isInsideAwardsList) {
         mouseTimeout = setTimeout(() => {
-          isMouseMoving = false
           const images = awardPreview.querySelectorAll("img")
           if (images.length > 1) {
             const lastImage = images[images.length - 1]
@@ -198,12 +205,29 @@ const Projects = () => {
     document.addEventListener("mousemove", handleMouseMove)
     document.addEventListener("scroll", handleScroll, { passive: true })
 
-    awardsElements.forEach((award, index) => {
+    // Listener para resize - deshabilitar/habilitar animaciones
+    const handleResize = () => {
+      if (!shouldAnimate()) {
+        // Deshabilitar animaciones si la pantalla es muy pequeña
+        awardsElements.forEach((award) => {
+          const wrapper = award.querySelector(".award-wrapper") as HTMLElement
+          if (wrapper) {
+            gsap.set(wrapper, { y: 0 })
+          }
+        })
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    awardsElements.forEach((award) => {
       const wrapper = award.querySelector(".award-wrapper") as HTMLElement
       let currentPosition = POSITIONS.TOP
       let currentImage: HTMLImageElement | null = null
 
       const handleMouseEnter = (e: Event) => {
+        if (!shouldAnimate()) return
+
         const mouseEvent = e as MouseEvent
         activeAward = award as HTMLElement
         const rect = award.getBoundingClientRect()
@@ -233,9 +257,9 @@ const Projects = () => {
           })
         })
 
-        // Crear imagen en la posición del cursor
+        // Crear imagen del proyecto en la posición del cursor
         const img = document.createElement("img")
-        img.src = `/projects/img${index + 1}.jpg`
+        img.src = award.getAttribute("data-project-image") || ""
         img.style.position = "fixed"
         img.style.top = `${mouseEvent.clientY - 100}px`
         img.style.left = `${mouseEvent.clientX - 100}px`
@@ -260,6 +284,8 @@ const Projects = () => {
       }
 
       const handleMouseLeave = (e: Event) => {
+        if (!shouldAnimate()) return
+
         const mouseEvent = e as MouseEvent
         activeAward = null
         const rect = award.getBoundingClientRect()
@@ -289,6 +315,8 @@ const Projects = () => {
       }
 
       const handleAwardMouseMove = (e: Event) => {
+        if (!shouldAnimate()) return
+
         const mouseEvent = e as MouseEvent
         
         // Actualizar posición de la imagen para que siga el cursor
@@ -298,15 +326,25 @@ const Projects = () => {
         }
       }
 
+      // Agregar funcionalidad de click para enlazar al proyecto
+      const handleAwardClick = () => {
+        const projectLink = award.getAttribute("data-project-link")
+        if (projectLink && projectLink !== "#") {
+          window.open(projectLink, "_blank")
+        }
+      }
+
       award.addEventListener("mouseenter", handleMouseEnter)
       award.addEventListener("mouseleave", handleMouseLeave)
       award.addEventListener("mousemove", handleAwardMouseMove)
+      award.addEventListener("click", handleAwardClick)
     })
 
     // Cleanup function
     return () => {
       document.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
       
       if (lenisRef.current) {
         lenisRef.current.destroy()
