@@ -4,7 +4,7 @@ import WorkSection from "../../components/work-section/work-section";
 export default function Home() {
   return (
     <main>
-      {/* <WorkSection /> */}
+      <WorkSection />
       <Projects />
     </main>
   );
