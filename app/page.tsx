@@ -193,7 +193,7 @@ export default function Home() {
   return (
     <>
       <Loader show={showPreloader} onComplete={handleLoaderComplete} />
-      <div className="w-full min-h-screen flex flex-col justify-between">
+      <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
           className="relative px-8 pb-24 w-full"
@@ -255,7 +255,7 @@ export default function Home() {
             }}
             className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
             style={{
-              right: "-5rem",
+              right: "-6rem",
               top: "2vh",
               transform: "rotate(6deg)",
             }}
@@ -286,14 +286,14 @@ export default function Home() {
           </div>
 
           {/* Imágenes por encima de la banda negra */}
-          <div className="absolute inset-0 flex items-center justify-start max-w-6xl mx-auto pl-2 pr-6 pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-start w-full px-6 pointer-events-none">
             {/* Lado izquierdo - Imágenes */}
             <div className="flex items-center gap-8 relative">
               <div
                 ref={(el) => {
                   imageRefs.current[2] = el;
                 }}
-                className="relative w-[225px] h-[105px] md:w-[450px] md:h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
+                className="relative w-[200px] h-[105px] md:w-[450px] md:h-[210px] rounded-md overflow-hidden shadow-lg pointer-events-auto div3 z-1"
               >
                 <Image
                   src="/work/ssvelyo.png"
@@ -307,7 +307,7 @@ export default function Home() {
                 ref={(el) => {
                   imageRefs.current[1] = el;
                 }}
-                className="absolute w-[120px] h-[120px] rounded-md overflow-hidden div6 z-10"
+                className="absolute w-[100px] h-[100px] rounded-md overflow-hidden div6 z-10"
                 style={{
                   transform: "rotate(-12deg)",
                   bottom: 0,
@@ -324,7 +324,7 @@ export default function Home() {
           </div>
 
           {/* Texto debajo de la banda negra */}
-          <div className="flex max-w-6xl mx-auto px-6 py-8">
+          <div className="flex w-full px-6 py-8">
             {/* Espacio para la mitad izquierda */}
             <div className="w-1/2"></div>
             {/* Texto en la mitad derecha, posicionado a la derecha pero alineado a la izquierda */}
@@ -340,7 +340,7 @@ export default function Home() {
 
       {/* PORTFOLIO */}
       <div className="flex justify-center items-center portfolio-section mt-16">
-        <div className="w-[95%] max-w-6xl mx-auto relative">
+        <div className="w-full max-w-6xl mx-auto px-6 relative">
           <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
             <div className="relative">
               <div
@@ -375,8 +375,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-white rounded-4xl shadow-2xl p-8">
-            <div className="flex flex-row items-center p-2 gap-4 mb-8">
+          <div className="bg-white rounded-4xl shadow-2xl mt-16 p-4 md:p-8">
+            <div className="flex flex-col md:flex-row items-center p-2 gap-2">
               <Avatar className="w-16 h-16 md:w-20 md:h-20">
                 <AvatarImage src="/mcanimated.png" />
                 <AvatarFallback className="bg-gray-200 text-gray-600 text-xl font-semibold">
@@ -388,7 +388,7 @@ export default function Home() {
                 <h4 className="text-xl font-bold text-gray-900 mb-1">
                   Matías Carrera
                 </h4>
-                <p className="text-gray-600 text-sm md:text-base mb-4 sm:mb-0">
+                <p className="text-gray-600 text-sm md:text-base">
                   Full Stack Developer
                 </p>
               </div>
