@@ -283,15 +283,22 @@ section {
   height: 100vh;
   overflow: hidden;
 }
+
+.intro, .portfolio-section {
+  width: 100vw;
+  height: 100vh;
+}
 .parent {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  height: 95vh;
-  width: 95%;
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  height: 60vh;
+  width: 80%;
+  max-width: 800px;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .div1 {
@@ -316,6 +323,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 2rem 0;
 }
 
 .parent div {
@@ -513,10 +522,12 @@ section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 15px;
-    height: 95vh;
-    width: 95%;
+    gap: 12px;
+    height: 70vh;
+    width: 90%;
+    max-width: 600px;
     box-sizing: border-box;
+    margin: 0 auto;
   }
 }
 
