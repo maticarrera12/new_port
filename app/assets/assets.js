@@ -88,11 +88,12 @@ export const projects = [
     codeLink: "https://github.com/maticarrera12/inquirai",
     technologies: [
       "Next.js",
-      "TailwindCSS",
       "TypeScript",
-      "JavaScript",
       "MongoDB",
+      "TailwindCSS",
+      "JavaScript",
     ],
+    year: "2025",
   },
   {
     title: "Velyo",
@@ -102,13 +103,14 @@ export const projects = [
     codeLink: "https://github.com/maticarrera12/velyo-professional-developer",
     technologies: [
       "ReactJS",
+      "SpringBoot",
+      "MYSQL",
       "HTML",
       "CSS",
       "JavaScript",
       "Java",
-      "SpringBoot",
-      "MYSQL",
     ],
+    year: "2025",
   },
   {
     title: "MedReserva",
@@ -120,13 +122,14 @@ export const projects = [
     technologies: [
       "ReactJS",
       "Node.js",
+      "Express.js",
       "MongoDB",
       "TailwindCSS",
       "HTML",
       "CSS",
       "JavaScript",
-      "Express.js",
     ],
+    year: "2025",
   },
   {
     title: "Converso",
@@ -138,10 +141,11 @@ export const projects = [
     technologies: [
       "Next.js",
       "Supabase",
-      "ReactJS",
       "TailwindCSS",
+      "ReactJS",
       "JavaScript",
     ],
+    year: "2025",
   },
   {
     title: "VelvetPour",
@@ -151,6 +155,7 @@ export const projects = [
     projectLink: "https://velvetpour.vercel.app",
     codeLink: "https://github.com/maticarrera12/mojito-landing",
     technologies: ["GSAP", "ReactJS", "TailwindCSS", "JavaScript"],
+    year: "2025",
   },
   {
     title: "GTAVI",
@@ -169,6 +174,7 @@ export const projects = [
     projectLink: "https://quetedebo.vercel.app",
     codeLink: "https://github.com/maticarrera12/quetedebo",
     technologies: ["ReactJS", "TypeScript", "TailwindCSS", "JavaScript"],
+    year: "2025",
   },
   {
     title: "Awwward-winner",
@@ -176,7 +182,8 @@ export const projects = [
     description: "Clon de una pagina awwward-winner.",
     projectLink: "https://awwwards-winner.vercel.app/",
     codeLink: "https://github.com/maticarrera12/awwwards-winner",
-    technologies: ["ReactJS", "HTML", "CSS", "TailwindCSS", "JavaScript"],
+    technologies: ["ReactJS", "TailwindCSS", "JavaScript", "HTML", "CSS"],
+    year: "2024",
   },
   {
     title: "FilmTrailers",
@@ -184,6 +191,7 @@ export const projects = [
     description: "Clon de una plataforma de series y peliculas muy famosa.",
     projectLink: "https://film-trailers.vercel.app",
     codeLink: "https://github.com/maticarrera12/FilmTrailers",
-    technologies: ["ReactJS", "HTML", "CSS", "TailwindCSS", "JavaScript"],
+    technologies: ["ReactJS", "TailwindCSS", "JavaScript", "HTML", "CSS"],
+    year: "2024",
   },
 ];

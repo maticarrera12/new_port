@@ -47,6 +47,12 @@
 .award {
   height: 80px;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.award:hover {
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 .award-wrapper {
@@ -54,6 +60,35 @@
   height: 240px;
   will-change: transform;
   transform: translateY(-160px);
+}
+
+/* Deshabilitar animaciones en pantallas md y menores */
+@media (max-width: 1024px) {
+  .award-wrapper {
+    will-change: auto;
+    transform: translateY(0);
+    height: 80px; /* Solo una fila visible */
+  }
+  
+  .award {
+    clip-path: none;
+    height: 80px; /* Solo una fila visible */
+  }
+
+  /* Ocultar la fila con fondo negro en pantallas md */
+  .award-wrapper .award-project {
+    display: none;
+  }
+
+  /* Solo mostrar la primera fila con fondo blanco */
+  .award-wrapper .award-name:first-child {
+    display: flex;
+  }
+
+  /* Ocultar la última fila duplicada */
+  .award-wrapper .award-name:last-child {
+    display: none;
+  }
 }
 
 .award-name,
