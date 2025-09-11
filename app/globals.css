@@ -296,7 +296,8 @@ section, .write-page {
   box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
-  height: 90vh;
+  height: 100%;
+
 }
 
 .div1 {
@@ -323,6 +324,7 @@ section, .write-page {
   align-items: center;
   width: 100%;
   padding: 2rem 0;
+  height: 90vh;
 }
 
 .parent div {
