@@ -181,7 +181,6 @@ p {
   font-size: clamp(0.9rem, 1.1vw, 1.125rem);
   line-height: 1.1;
   letter-spacing: 0.005em;
-  margin-bottom: 1.5rem;
 }
 
 /* Lists */
@@ -277,7 +276,7 @@ td {
   letter-spacing: 0.01em;
   padding: 0.75rem;
 }
-section {
+section, .write-page {
   position: relative;
   width: 100vw;
   height: 100vh;
