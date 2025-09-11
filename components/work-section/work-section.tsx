@@ -305,7 +305,7 @@ export default function WorkSection() {
 
   return (
     <div className="app">
-      <section className="intro">
+      <section className="min-h-screen flex justify-center items-center">
         <h1>Projects</h1>
       </section>
 
