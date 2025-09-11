@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-
 .awards img {
   position: absolute;
   width: 100%;
@@ -19,6 +18,9 @@
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .awards p {
@@ -26,9 +28,6 @@
   font-size: 1.5rem;
   font-weight: 700;
 }
-
-
-
 
 .awards {
   min-height: 100vh;
@@ -69,7 +68,7 @@
     transform: translateY(0);
     height: 80px; /* Solo una fila visible */
   }
-  
+
   .award {
     clip-path: none;
     height: 80px; /* Solo una fila visible */
@@ -94,20 +93,32 @@
 @media (max-width: 768px) {
   .awards h1 {
     font-size: 2.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  
+
   .awards p {
     font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
 @media (max-width: 480px) {
   .awards h1 {
     font-size: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  
+
   .awards p {
     font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -121,16 +132,18 @@
   padding: 5px 15px;
   cursor: pointer;
   border-bottom: 1px solid #000;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .award-name {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   color: #000;
 }
 
 .award-project {
   background-color: #000;
-  color: #FAFAFA;
+  color: #fafafa;
 }
 
 .award-preview {
