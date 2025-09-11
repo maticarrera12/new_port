@@ -1,0 +1,178 @@
+/* Services Page Specific Styles */
+.services-page {
+  --services-dark: rgba(20, 20, 20, 1);
+  --services-light: #ff3500;
+}
+
+.services-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.services-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services-page h1 {
+  text-transform: uppercase;
+  font-size: 5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  text-align: center;
+}
+
+.services-page .services,
+.services-page .outro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--services-dark);
+  color: var(--services-light);
+}
+
+.services-page .services h1,
+.services-page .outro h1 {
+  width: 50%;
+}
+
+.services-page .sticky-text-1,
+.services-page .sticky-text-2 {
+  background-color: var(--services-light);
+  color: var(--services-dark);
+}
+
+.services-page .sticky-text-3 {
+  color: var(--services-light);
+}
+
+.services-page .text-container,
+.services-page .bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: opacity, transform;
+  z-index: 1;
+}
+
+.services-page .text-container h1 {
+  position: relative;
+  left: -0.035em;
+  letter-spacing: -0.05em;
+  transform-origin: 50% 0%;
+  transform: scaleY(0);
+}
+
+.services-page .sticky-text-1 .text-container h1 {
+  font-size: 23vw;
+  font-weight: 300;
+  will-change: transform;
+  font-stretch: condensed;
+  letter-spacing: -0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.services-page .sticky-text-2 .text-container h1 {
+  font-size: 35vw;
+  will-change: transform;
+  font-stretch: condensed;
+  letter-spacing: -0.15em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.services-page .sticky-text-3 .text-container {
+  background-color: var(--services-dark);
+  color: var(--services-light);
+}
+
+.services-page .sticky-text-3 .text-container h1 {
+  font-size: 27vw;
+  font-weight: 900;
+  font-stretch: condensed;
+  letter-spacing: -0.12em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.services-page .header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  z-index: 2;
+}
+
+@media (max-width: 1000px) {
+  .services-page h1 {
+    font-size: 3rem;
+  }
+
+  .services-page .services h1,
+  .services-page .outro h1,
+  .services-page .header {
+    width: calc(100% - 4rem);
+  }
+
+  .services-page .sticky-text-1 .text-container h1 {
+    font-size: 20vw;
+    letter-spacing: -0.12em;
+  }
+
+  .services-page .sticky-text-2 .text-container h1 {
+    font-size: 30vw;
+    letter-spacing: -0.18em;
+  }
+
+  .services-page .sticky-text-3 .text-container h1 {
+    font-size: 25vw;
+    letter-spacing: -0.15em;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-page .sticky-text-1 .text-container h1 {
+    font-size: 18vw;
+    letter-spacing: -0.15em;
+  }
+
+  .services-page .sticky-text-2 .text-container h1 {
+    font-size: 28vw;
+    letter-spacing: -0.2em;
+  }
+
+  .services-page .sticky-text-3 .text-container h1 {
+    font-size: 22vw;
+    letter-spacing: -0.18em;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-page .sticky-text-1 .text-container h1 {
+    font-size: 16vw;
+    letter-spacing: -0.18em;
+  }
+
+  .services-page .sticky-text-2 .text-container h1 {
+    font-size: 25vw;
+    letter-spacing: -0.25em;
+  }
+
+  .services-page .sticky-text-3 .text-container h1 {
+    font-size: 20vw;
+    letter-spacing: -0.2em;
+  }
+}
