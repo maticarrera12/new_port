@@ -306,7 +306,7 @@ export default function WorkSection() {
   return (
     <div className="app">
       <section className="min-h-screen flex justify-center items-center">
-        <h1>Projects</h1>
+        <h1 className="text-5xl font-bold uppercase">See My Work</h1>
       </section>
 
       <section className="work" ref={workSectionRef}>

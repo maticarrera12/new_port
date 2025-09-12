@@ -228,8 +228,8 @@ export default function Page() {
     <>
       <ReactLenis root>
         <div ref={containerRef} className="services-page">
-          <section className="services">
-            <h1>This space intentionally loud</h1>
+          <section className="services flex justify-center items-center">
+            <h1>Creative Digital Solutions</h1>
           </section>
 
           <section className="sticky-text-1">
@@ -246,8 +246,8 @@ export default function Page() {
 
           <section className="sticky-text-3">
             <div className="bg-img">
-              <Image 
-                src="/services/desk.png" 
+              <Image
+                src="/services/desk1.jpg" 
                 alt="" 
                 fill
                 style={{ objectFit: 'cover' }}

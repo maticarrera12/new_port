@@ -177,7 +177,7 @@ export const projects = [
     year: "2025",
   },
   {
-    title: "Awwward-winner",
+    title: "Awwward",
     image: "/work/ssawwwardwinner.png",
     description: "Clon de una pagina awwward-winner.",
     projectLink: "https://awwwards-winner.vercel.app/",

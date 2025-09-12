@@ -1,6 +1,71 @@
+'use client'
 import React from 'react'
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 const WritePage = () => {
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    message: "",
+  });
+  const [isSent, setIsSent] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value} = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.first_name === "" || formData.last_name === "" || formData.email === "" || formData.message === "") {
+      setError("Please fill in all fields");
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: `${formData.first_name} ${formData.last_name}`,
+          from_email: formData.email,
+          user_message: formData.message,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          user_email: formData.email,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+      setIsSent(true);
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        message: "",
+      });
+      toast.success("Message sent successfully!");
+      
+      // Reset isSent after 3 seconds to allow sending again
+      setTimeout(() => {
+        setIsSent(false);
+      }, 3000);
+    } catch (error) {
+      setError("Failed to send message. Please try again.");
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className='min-h-screen w-full px-6 py-16 relative write-page'>
       {/* Main Content */}
@@ -22,7 +87,7 @@ const WritePage = () => {
           <div className='w-3/4 lg:w-full h-[10vh] lg:h-32 bg-orange ml-auto lg:ml-0 mb-8'></div>
           
           {/* Contact Form */}
-          <form className='space-y-6 mb-8 pr-5 lg:pr-0 lg:w-full lg:max-w-md'>
+          <form className='space-y-6 mb-8 pr-5 lg:pr-0 lg:w-full lg:max-w-md' onSubmit={handleSubmit}>
             <div>
               <label className='block text-sm font-bold mb-2'>Name</label>
               <div className='flex space-x-4'>
@@ -30,6 +95,9 @@ const WritePage = () => {
                   <label className='block text-sm font-normal mb-1'>First name</label>
                   <input 
                     type='text' 
+                    name='first_name'
+                    value={formData.first_name}
+                    onChange={handleChange}
                     className='w-full border-0 border-b-2 border-black bg-transparent py-2 focus:outline-none'
                   />
                 </div>
@@ -37,6 +105,9 @@ const WritePage = () => {
                   <label className='block text-sm font-normal mb-1'>Last name</label>
                   <input 
                     type='text' 
+                    name='last_name'
+                    value={formData.last_name}
+                    onChange={handleChange}
                     className='w-full border-0 border-b-2 border-black bg-transparent py-2 focus:outline-none'
                   />
                 </div>
@@ -47,6 +118,9 @@ const WritePage = () => {
               <label className='block text-sm font-normal mb-1'>Email</label>
               <input 
                 type='email' 
+                name='email'
+                value={formData.email}
+                onChange={handleChange}
                 className='w-full border-0 border-b-2 border-black bg-transparent py-2 focus:outline-none'
               />
             </div>
@@ -55,15 +129,23 @@ const WritePage = () => {
               <label className='block text-sm font-normal mb-1'>Message</label>
               <textarea 
                 rows={1}
+                name='message'
+                value={formData.message}
+                onChange={handleChange}
                 className='w-full border-0 border-b-2 border-black bg-transparent py-2 focus:outline-none resize-none lg:rows-4'
               ></textarea>
             </div>
             
             <button 
               type='submit'
-              className='bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors'
+              onClick={handleSubmit}
+              className='bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+              disabled={isSent || isLoading}
             >
-              Submit
+              {isLoading && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
+              {isLoading ? "Sending..." : isSent ? "Sent!" : "Submit"}
             </button>
           </form>
           
@@ -80,6 +162,7 @@ const WritePage = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   )
 }
