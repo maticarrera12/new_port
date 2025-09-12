@@ -7,7 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { ReactLenis } from "lenis/react";
 import "./services.css";
-
+import Image from "next/image";
+import CardsService from "../../components/CardServices/CardsService";
 
 export default function Page() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -245,7 +246,13 @@ export default function Page() {
 
           <section className="sticky-text-3">
             <div className="bg-img">
-              {/* <img src="/work/ssvelyo.png" alt="" /> */}
+              <Image 
+                src="/services/desk.png" 
+                alt="" 
+                fill
+                style={{ objectFit: 'cover' }}
+                priority
+              />
             </div>
             <div className="text-container" ref={textContainer3Ref}>
               <h1 ref={textElement3Ref}>UX/UI</h1>
@@ -255,11 +262,9 @@ export default function Page() {
             </div>
           </section>
 
-          {/* <section className="outro">
-            <h1>End of transmission</h1>
-          </section> */}
         </div>
       </ReactLenis>
+        <CardsService />
     </>
   );
 }

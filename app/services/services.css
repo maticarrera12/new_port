@@ -1,5 +1,5 @@
 .services-page {
-  --services-dark: rgba(20, 20, 20, 1);
+  --services-dark: #000;
   --services-light: #ff3500;
 }
 
@@ -46,6 +46,7 @@
 
 .services-page .sticky-text-3 {
   color: var(--services-light);
+  position: relative;
 }
 
 .services-page .text-container,
