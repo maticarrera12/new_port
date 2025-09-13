@@ -51,6 +51,10 @@ nav section {
   will-change: clip-path;
 }
 
+.menu-overlay span{
+  text-transform: uppercase;
+}
+
 .menu-content {
   position: absolute;
   top: 45%;
@@ -88,24 +92,25 @@ nav section {
   will-change: transform;
 }
 
-.menu-link {
+.menu-overlay .menu-link {
   position: relative;
   will-change: transform;
   overflow: hidden;
 }
 
-.menu-link a {
+.menu-overlay .menu-link a {
   position: relative;
   color: var(--light);
   font-family: var(--font-anton), sans-serif;
-  font-size: 10rem;
+  font-size: 10rem !important;
   font-weight: 400;
   letter-spacing: -0.2rem;
+  text-transform: uppercase;
   display: inline-block;
   overflow: hidden;
 }
 
-.menu-link a span:nth-child(2) {
+.menu-overlay .menu-link a span:nth-child(2) {
   position: absolute;
   top: 0;
   left: 0;
@@ -125,7 +130,7 @@ nav section {
   clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
 }
 
-.char {
+.menu-overlay .char {
   position: relative;
   display: inline-block;
   will-change: transform;
@@ -137,22 +142,22 @@ nav section {
   overflow: hidden;
 }
 
-.menu-col p span {
+.menu-overlay .menu-col p span {
   display: inline-block;
 }
 
-.menu-col p span:nth-child(1) {
+.menu-overlay .menu-col p span:nth-child(1) {
   position: relative;
 }
 
-.menu-col p span:nth-child(2) {
+.menu-overlay .menu-col p span:nth-child(2) {
   position: absolute;
   top: 0;
   left: 0;
 }
 
 /* Solución para segunda columna: usar transform en lugar de position */
-.menu-col:nth-child(2) p span:nth-child(2) {
+.menu-overlay .menu-col:nth-child(2) p span:nth-child(2) {
   position: absolute;
   top: 0;
   left: 0;
@@ -175,8 +180,9 @@ nav section {
     gap: 0;
   }
 
-  .menu-link a {
-    font-size: 4rem;
+  .menu-overlay .menu-link a {
+    font-size: 4rem !important;
     letter-spacing: -0.05rem;
+    text-transform: uppercase;
   }
 }

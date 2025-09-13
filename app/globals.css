@@ -392,8 +392,8 @@ section, .write-page {
   padding: 0 !important;
 }
 
-.menu p,
-.menu a {
+nav.menu p,
+nav.menu a {
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.8rem;
