@@ -139,8 +139,6 @@ const AboutPage = () => {
             (aboutMeSection as HTMLElement)!.style.backgroundColor = "#000";
           }
 
-          // Hide duplicate icons during scaling phase
-          hideDuplicateIcons();
 
           const targetCenterY = window.innerHeight / 2;
           const targetCenterX = window.innerWidth / 2;
@@ -195,7 +193,7 @@ const AboutPage = () => {
           if (!window.duplicateIcons) {
             window.duplicateIcons = [];
 
-            iconElements.forEach((icon, index) => {
+            iconElements.forEach((icon) => {
               const duplicate = icon.cloneNode(true) as HTMLElement;
               duplicate.className = "duplicate-icon";
               duplicate.style.position = "absolute";
@@ -203,7 +201,7 @@ const AboutPage = () => {
               duplicate.style.height = headerIconSize + "px";
 
               document.body.appendChild(duplicate);
-              window.duplicateIcons.push(duplicate);
+              window.duplicateIcons?.push(duplicate);
             });
           }
 
