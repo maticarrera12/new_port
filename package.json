@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "lint": "eslint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -17,7 +16,6 @@
     "@mui/material": "^7.3.2",
     "@radix-ui/react-avatar": "^1.1.10",
     "@studio-freight/lenis": "^1.0.42",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.13.0",
     "lenis": "^1.3.10",
@@ -45,5 +43,8 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.8",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
