@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Anton } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import ClientLayout from "./client-layout";
 import { ViewTransitions } from "next-view-transitions";
 
 const anton = Anton({
@@ -94,7 +93,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${anton.variable} ${satoshi.variable} antialiased`}>
           <div className="w-full">
-            <ClientLayout>{children}</ClientLayout>
+            {children}
           </div>
         </body>
       </html>
