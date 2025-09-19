@@ -78,6 +78,31 @@ export default function Home() {
           zIndex: window.getComputedStyle(img).zIndex,
         };
 
+        // Corregir posiciones específicas para las imágenes sobre el grid del portfolio
+        if (i === 3) {
+          // Inquirai - responsive positioning
+          originalStyles.position = "absolute";
+          // Usar valores responsivos según el viewport
+          if (window.innerWidth < 768) {
+            originalStyles.top = "-0.75rem"; // -top-3 = -0.75rem en móviles
+            originalStyles.right = "-0.75rem"; // -right-3 = -0.75rem en móviles
+          } else {
+            originalStyles.top = "-1.5rem"; // -top-6 = -1.5rem en desktop
+            originalStyles.right = "-1.5rem"; // -right-6 = -1.5rem en desktop
+          }
+          originalStyles.left = "auto";
+          originalStyles.bottom = "auto";
+          originalStyles.transform = "rotate(12deg)";
+        } else if (i === 4) {
+          // MedReservA - relative con rotate(3deg)
+          originalStyles.position = "relative";
+          originalStyles.top = "auto";
+          originalStyles.left = "auto";
+          originalStyles.right = "auto";
+          originalStyles.bottom = "auto";
+          originalStyles.transform = "rotate(3deg)";
+        }
+
         // Recalcular posiciones después del reseteo
         const rect = img.getBoundingClientRect();
 
@@ -440,13 +465,13 @@ export default function Home() {
       {/* PORTFOLIO */}
       <div className="flex justify-center items-center portfolio-section mt-2 lg:mt-16">
         <div className="w-full max-w-6xl mx-auto px-6 relative">
-          <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
+          <div className="absolute top-0 right-8 md:right-16 z-20">
             <div className="relative">
               <div
                 ref={(el) => {
                   imageRefs.current[4] = el;
                 }}
-                className="w-48 h-32 md:w-64 md:h-40 rounded-lg shadow-lg div4 z-1"
+                className="w-32 h-20 md:w-48 lg:w-64 md:h-32 lg:h-40 rounded-lg shadow-lg div4 z-1"
                 style={{ transform: "rotate(3deg)" }}
               >
                 <Image
@@ -461,7 +486,7 @@ export default function Home() {
                 ref={(el) => {
                   imageRefs.current[3] = el;
                 }}
-                className="absolute -top-6 -right-6 w-32 h-24 md:w-40 md:h-28 div2 z-10"
+                className="absolute -top-3 -right-3 md:-top-6 md:-right-6 w-20 h-16 md:w-32 lg:w-40 md:h-24 lg:h-28 div2 z-10"
                 style={{ transform: "rotate(12deg)" }}
               >
                 <Image
