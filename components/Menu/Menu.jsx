@@ -438,7 +438,7 @@ const Menu = ({ containerRef }) => {
           <p>{isMenuOpen ? "Close" : "Menu"}</p>
         </div>
         <Link href="/write" className="nav-item">
-          <p>Write</p>
+          <p>Write Me</p>
         </Link>
       </nav>
 

@@ -1,54 +1,26 @@
 "use client";
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CustomEase from "gsap/CustomEase";
-import { useLenis } from "lenis/react";
-import Loader from "../components/Loader/Loader";
 import AnimatedText from "../components/AnimatedText/AnimatedText";
 import Tech from "../components/tech/Tech";
 import Image from "next/image";
 import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Menu from "../components/Menu/Menu";
+import Footer from "../components/Footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 
 export default function Home() {
-  const [showPreloader, setShowPreloader] = useState(false);
-  const [loaderAnimating, setLoaderAnimating] = useState(false);
-  const lenis = useLenis();
-
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroParentRef = useRef<HTMLDivElement | null>(null);
-
-  // Preloader simple
-  useLayoutEffect(() => {
-    const shown = sessionStorage.getItem("loaderShown");
-    if (!shown) {
-      setShowPreloader(true);
-      sessionStorage.setItem("loaderShown", "true");
-    }
-  }, []);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
-    if (lenis) {
-      if (loaderAnimating) {
-        lenis.stop();
-      } else {
-        lenis.start();
-      }
-    }
-  }, [lenis, loaderAnimating]);
-
-  const handleLoaderComplete = () => {
-    setLoaderAnimating(false);
-    setShowPreloader(false);
-  };
-
-  useLayoutEffect(() => {
-    if (showPreloader) return;
 
     const images = imageRefs.current;
     const gridItems = gridRefs.current;
@@ -257,12 +229,13 @@ export default function Home() {
         }
       });
     });
-  }, [showPreloader]);
+  }, []);
 
   return (
     <>
-      <Loader show={showPreloader} onComplete={handleLoaderComplete} />
-      <div className="w-full min-h-screen flex flex-col justify-between intro">
+      <Menu containerRef={containerRef} />
+      <div className="container" ref={containerRef}>
+        <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
           className="relative px-8 pb-24 w-full"
@@ -534,6 +507,8 @@ export default function Home() {
           },
         ]}
       />
+      </div>
+      <Footer />
     </>
   );
 }
