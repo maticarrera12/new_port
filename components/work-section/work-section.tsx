@@ -256,11 +256,33 @@ export default function WorkSection() {
 
     window.addEventListener("resize", handleResize)
 
+    // Función para inicializar posiciones correctas de las letras
+    const initializeLetterPositions = () => {
+      path.forEach((line, lineIndex) => {
+        ;(line as ExtendedLine).letterElements.forEach((element: HTMLElement, i: number) => {
+          const initialCurvePosition = i / 14
+          const initialPoint = (line as ExtendedLine).curve.getPoint(initialCurvePosition)
+          const initialVector = initialPoint.clone().project(lettersCamera)
+          const initialX = (-initialVector.x * 0.5 + 0.5) * window.innerWidth
+          const initialY = (-initialVector.y * 0.5 + 0.5) * window.innerHeight
+          
+          const positions = letterPositions.get(element)
+          positions.current = { x: initialX, y: initialY }
+          positions.target = { x: initialX, y: initialY }
+          
+          // Establecer posición inicial inmediatamente en el DOM
+          element.style.transform = `translate(-50%, -50%) translate3d(${initialX}px, ${initialY}px, 0px)`
+        })
+      })
+    }
+
     // Initialize
     drawGrid(0)
     animate()
     updateTargetPositions(0)
     updateLetterSizes()
+    // Inicializar posiciones después de que todo esté configurado
+    initializeLetterPositions()
 
     // Cleanup function
     return () => {

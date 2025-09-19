@@ -6,10 +6,8 @@ import CustomEase from "gsap/CustomEase";
 import AnimatedText from "../components/AnimatedText/AnimatedText";
 import Tech from "../components/tech/Tech";
 import Image from "next/image";
-import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
+import AnimatedButton from "../components/AnimatedButton/AnimatedButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Menu from "../components/Menu/Menu";
-import Footer from "../components/Footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -18,7 +16,6 @@ export default function Home() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroParentRef = useRef<HTMLDivElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
 
@@ -233,8 +230,6 @@ export default function Home() {
 
   return (
     <>
-      <Menu containerRef={containerRef} />
-      <div className="container" ref={containerRef}>
         <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
@@ -435,7 +430,15 @@ export default function Home() {
                 </p>
               </div>
 
-              <AnimatedButton label="See all" route="/work" />
+              <div className="flex-shrink-0">
+                <AnimatedButton 
+                  label="See all" 
+                  route="/work" 
+                  animate={true}
+                  animateOnScroll={true}
+                  delay={0.2}
+                />
+              </div>
             </div>
 
             <div className="grid">
@@ -507,8 +510,6 @@ export default function Home() {
           },
         ]}
       />
-      </div>
-      <Footer />
     </>
   );
 }
