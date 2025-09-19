@@ -320,7 +320,7 @@ export default function Home() {
       <div className="w-full flex flex-col intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          className="relative lg:px-8 pb-40 w-full overflow-x-hidden"
+          className="relative lg:px-8 pb-32 w-full overflow-x-hidden"
           style={{ marginTop: "5rem" }}
         >
           <div className="flex justify-center items-center w-full">
@@ -339,7 +339,7 @@ export default function Home() {
             </div>
 
             {/* Columna central - 90% */}
-            <div className="w-[90%] text-left flex flex-col justify-center mt-72 md:mt-0">
+            <div className="w-[90%] text-left flex flex-col justify-center mt-64 md:mt-0">
               <h3 className="font-light z-1000">
                 Hello, I&apos;m{" "}
                 <span className="text-orange">Matias Carrera</span>
