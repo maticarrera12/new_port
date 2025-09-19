@@ -125,7 +125,7 @@
 body {
   font-family: var(--font-satoshi), sans-serif;
   background-color: #fafafa;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   overflow-y: scroll; /* Force scrollbar to always be present */
 }
 
@@ -141,7 +141,7 @@ nav img {
 
 /* Headings */
 h1 {
-  font-size: clamp(4rem, 8vw, 8rem);
+  font-size: clamp(3.5rem, 7.5vw, 7.5rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
 }
@@ -411,6 +411,19 @@ nav.menu a {
   .about-me h1 {
     width: 100%;
     font-size: 4rem;
+  }
+}
+
+/* Ajuste específico para el h1 del hero en móviles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(3.5rem, 7vw, 5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: clamp(3rem, 6vw, 4rem);
   }
 }
 

@@ -295,7 +295,7 @@ export default function Home() {
       <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          className="relative px-8 pb-24 w-full"
+          className="relative px-8 pb-24 w-full overflow-x-hidden"
           style={{ marginTop: "5rem" }}
         >
           <div className="flex justify-center items-center w-full">
@@ -354,7 +354,7 @@ export default function Home() {
             }}
             className="absolute w-[180px] h-[400px] rounded-md overflow-hidden div5"
             style={{
-              right: "-6rem",
+              right: "-8rem",
               top: "2vh",
               transform: "rotate(6deg)",
             }}
