@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 gsap.registerPlugin(SplitText, useGSAP);
 
@@ -436,9 +437,9 @@ const Menu = ({ containerRef }) => {
         <div className="nav-toggle" ref={navToggleRef} onClick={toggleMenu}>
           <p>{isMenuOpen ? "Close" : "Menu"}</p>
         </div>
-        <div className="nav-item">
+        <Link href="/write" className="nav-item">
           <p>Write</p>
-        </div>
+        </Link>
       </nav>
 
       <div className="menu-overlay menu" ref={menuOverlayRef}>
