@@ -17,7 +17,7 @@ export default function Home() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroParentRef = useRef<HTMLDivElement | null>(null);
-  
+
   // Detectar si es la primera visita de la sesión
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -25,13 +25,13 @@ export default function Home() {
 
   // Verificar primera visita al montar el componente
   useLayoutEffect(() => {
-    const hasVisited = sessionStorage.getItem('hasVisitedHome');
+    const hasVisited = sessionStorage.getItem("hasVisitedHome");
     if (!hasVisited) {
       // Primera visita
       setIsFirstVisit(true);
       setShowLoader(true);
       setLoaderComplete(false);
-      sessionStorage.setItem('hasVisitedHome', 'true');
+      sessionStorage.setItem("hasVisitedHome", "true");
     } else {
       // Ya ha visitado antes en esta sesión
       setIsFirstVisit(false);
@@ -53,230 +53,233 @@ export default function Home() {
     const initDelay = setTimeout(() => {
       // Forzar recálculo de ScrollTrigger después del Loader
       ScrollTrigger.refresh();
-      
+
       const images = imageRefs.current;
       const gridItems = gridRefs.current;
 
-    images.forEach((img, i) => {
-      if (!img) return;
+      images.forEach((img, i) => {
+        if (!img) return;
 
-      const target = gridItems[i];
-      if (!target) return;
+        const target = gridItems[i];
+        if (!target) return;
 
-      const heroParent = heroParentRef.current;
+        const heroParent = heroParentRef.current;
 
-      // Almacenar estilos originales del CSS
-      const originalStyles = {
-        position: window.getComputedStyle(img).position,
-        left: window.getComputedStyle(img).left,
-        top: window.getComputedStyle(img).top,
-        right: window.getComputedStyle(img).right,
-        bottom: window.getComputedStyle(img).bottom,
-        width: window.getComputedStyle(img).width,
-        height: window.getComputedStyle(img).height,
-        transform: window.getComputedStyle(img).transform,
-        zIndex: window.getComputedStyle(img).zIndex
-      };
-      
-      // Recalcular posiciones después del reseteo
-      const rect = img.getBoundingClientRect();
-      
-      // Para la imagen de Velvet Pour (índice 5), calcular la posición left equivalente
-      let startX = rect.left;
-      if (i === 5) {
-        // Si está posicionada con right, calcular left equivalente
-        const computedStyle = window.getComputedStyle(img);
-        const rightValue = computedStyle.right;
-        if (rightValue && rightValue !== 'auto') {
-          // Calcular left basado en right
-          const rightPx = parseFloat(rightValue.replace('px', ''));
-          startX = window.innerWidth - rect.width - rightPx;
-        }
-      }
-      
-      const startY = rect.top;
-      const startWidth = rect.width;
-      const startHeight = rect.height;
+        // Almacenar estilos originales del CSS
+        const originalStyles = {
+          position: window.getComputedStyle(img).position,
+          left: window.getComputedStyle(img).left,
+          top: window.getComputedStyle(img).top,
+          right: window.getComputedStyle(img).right,
+          bottom: window.getComputedStyle(img).bottom,
+          width: window.getComputedStyle(img).width,
+          height: window.getComputedStyle(img).height,
+          transform: window.getComputedStyle(img).transform,
+          zIndex: window.getComputedStyle(img).zIndex,
+        };
 
-      // Obtener rotación inicial
-      const computedStyle = window.getComputedStyle(img);
-      const transform = computedStyle.transform;
-      let startRotation = 0;
-      if (transform && transform !== "none") {
-        const matrix = transform.match(/matrix\(([^)]+)\)/);
-        if (matrix) {
-          const values = matrix[1].split(",").map((v) => parseFloat(v.trim()));
-          if (values.length >= 4) {
-            startRotation = Math.atan2(values[1], values[0]) * (180 / Math.PI);
-          }
-        }
-      }
+        // Recalcular posiciones después del reseteo
+        const rect = img.getBoundingClientRect();
 
-      // Función para recalcular startX en resize (solo para Velvet Pour)
-      const recalculateStartX = () => {
+        // Para la imagen de Velvet Pour (índice 5), calcular la posición left equivalente
+        let startX = rect.left;
         if (i === 5) {
-          const rect = img.getBoundingClientRect();
+          // Si está posicionada con right, calcular left equivalente
           const computedStyle = window.getComputedStyle(img);
           const rightValue = computedStyle.right;
-          if (rightValue && rightValue !== 'auto') {
-            const rightPx = parseFloat(rightValue.replace('px', ''));
+          if (rightValue && rightValue !== "auto") {
+            // Calcular left basado en right
+            const rightPx = parseFloat(rightValue.replace("px", ""));
             startX = window.innerWidth - rect.width - rightPx;
           }
         }
-      };
 
-      // Función para reposicionar la imagen en su posición original
-      const repositionToOriginal = () => {
-        const isInGrid = img.parentElement?.classList.contains('parent');
-        if (!isInGrid) {
-          // Restaurar estilos originales almacenados
-          gsap.set(img, {
-            position: originalStyles.position,
-            left: originalStyles.left,
-            top: originalStyles.top,
-            right: originalStyles.right,
-            bottom: originalStyles.bottom,
-            width: originalStyles.width,
-            height: originalStyles.height,
-            transform: originalStyles.transform,
-            zIndex: originalStyles.zIndex
-          });
+        const startY = rect.top;
+        const startWidth = rect.width;
+        const startHeight = rect.height;
+
+        // Obtener rotación inicial
+        const computedStyle = window.getComputedStyle(img);
+        const transform = computedStyle.transform;
+        let startRotation = 0;
+        if (transform && transform !== "none") {
+          const matrix = transform.match(/matrix\(([^)]+)\)/);
+          if (matrix) {
+            const values = matrix[1]
+              .split(",")
+              .map((v) => parseFloat(v.trim()));
+            if (values.length >= 4) {
+              startRotation =
+                Math.atan2(values[1], values[0]) * (180 / Math.PI);
+            }
+          }
         }
-      };
 
-      // Listener para resize
-      const handleResize = () => {
-        recalculateStartX();
-        repositionToOriginal();
-      };
+        // Función para recalcular startX en resize (solo para Velvet Pour)
+        const recalculateStartX = () => {
+          if (i === 5) {
+            const rect = img.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(img);
+            const rightValue = computedStyle.right;
+            if (rightValue && rightValue !== "auto") {
+              const rightPx = parseFloat(rightValue.replace("px", ""));
+              startX = window.innerWidth - rect.width - rightPx;
+            }
+          }
+        };
 
-      window.addEventListener('resize', handleResize);
-
-      ScrollTrigger.create({
-        trigger: ".portfolio-section",
-        start: "top 90%",
-        end: "top 10%",
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = gsap.utils.clamp(0, 1, self.progress);
-          const targetRect = target.getBoundingClientRect();
-          const finalX = targetRect.left;
-          const finalY = targetRect.top;
-          const finalWidth = targetRect.width;
-          const finalHeight = targetRect.height;
-
-          const currentX = gsap.utils.interpolate(startX, finalX, progress);
-          const currentY = gsap.utils.interpolate(startY, finalY, progress);
-          const currentWidth = gsap.utils.interpolate(
-            startWidth,
-            finalWidth,
-            progress
-          );
-          const currentHeight = gsap.utils.interpolate(
-            startHeight,
-            finalHeight,
-            progress
-          );
-          const currentRotation = gsap.utils.interpolate(
-            startRotation,
-            0,
-            progress
-          );
-
-          gsap.set(img, {
-            position: "fixed",
-            left: currentX,
-            top: currentY,
-            width: currentWidth,
-            height: currentHeight,
-            rotation: currentRotation,
-            zIndex: 999,
-          });
-
-          // Al final absoluto del scroll
-          if (progress >= 1) {
-            target.appendChild(img);
+        // Función para reposicionar la imagen en su posición original
+        const repositionToOriginal = () => {
+          const isInGrid = img.parentElement?.classList.contains("parent");
+          if (!isInGrid) {
+            // Restaurar estilos originales almacenados
             gsap.set(img, {
-              position: "absolute",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: "100%",
-              rotation: 0,
-              borderRadius: "6px",
-              zIndex: 1,
-              margin: 0,
-              padding: 0,
+              position: originalStyles.position,
+              left: originalStyles.left,
+              top: originalStyles.top,
+              right: originalStyles.right,
+              bottom: originalStyles.bottom,
+              width: originalStyles.width,
+              height: originalStyles.height,
+              transform: originalStyles.transform,
+              zIndex: originalStyles.zIndex,
             });
-            target.style.color = "transparent";
+          }
+        };
 
-            // Asegurar que la imagen ocupe todo el div
-            const imgElement = img.querySelector("img");
-            if (imgElement) {
-              gsap.set(imgElement, {
+        // Listener para resize
+        const handleResize = () => {
+          recalculateStartX();
+          repositionToOriginal();
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        ScrollTrigger.create({
+          trigger: ".portfolio-section",
+          start: "top 90%",
+          end: "top 10%",
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = gsap.utils.clamp(0, 1, self.progress);
+            const targetRect = target.getBoundingClientRect();
+            const finalX = targetRect.left;
+            const finalY = targetRect.top;
+            const finalWidth = targetRect.width;
+            const finalHeight = targetRect.height;
+
+            const currentX = gsap.utils.interpolate(startX, finalX, progress);
+            const currentY = gsap.utils.interpolate(startY, finalY, progress);
+            const currentWidth = gsap.utils.interpolate(
+              startWidth,
+              finalWidth,
+              progress
+            );
+            const currentHeight = gsap.utils.interpolate(
+              startHeight,
+              finalHeight,
+              progress
+            );
+            const currentRotation = gsap.utils.interpolate(
+              startRotation,
+              0,
+              progress
+            );
+
+            gsap.set(img, {
+              position: "fixed",
+              left: currentX,
+              top: currentY,
+              width: currentWidth,
+              height: currentHeight,
+              rotation: currentRotation,
+              zIndex: 999,
+            });
+
+            // Al final absoluto del scroll
+            if (progress >= 1) {
+              target.appendChild(img);
+              gsap.set(img, {
+                position: "absolute",
+                left: 0,
+                top: 0,
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-                position: "absolute",
-                top: 0,
-                left: 0,
+                rotation: 0,
                 borderRadius: "6px",
-                display: "block",
+                zIndex: 1,
                 margin: 0,
                 padding: 0,
-                maxWidth: "100%",
-                maxHeight: "100%",
-                minWidth: "100%",
-                minHeight: "100%",
               });
-            }
-          } else if (img.parentElement === target && progress < 1) {
-            heroParent?.appendChild(img);
-            
-            // Para Velvet Pour (índice 5), usar posicionamiento right
-            if (i === 5) {
-              gsap.set(img, {
-                position: "fixed",
-                right: "-6rem",
-                top: currentY,
-                width: currentWidth,
-                height: currentHeight,
-                rotation: currentRotation,
-                zIndex: 999,
-              });
-            } else {
-              gsap.set(img, {
-                position: "fixed",
-                left: currentX,
-                top: currentY,
-                width: currentWidth,
-                height: currentHeight,
-                rotation: currentRotation,
-                zIndex: 999,
-              });
-            }
+              target.style.color = "transparent";
 
-            // Restaurar la imagen interna a su tamaño original
-            const imgElement = img.querySelector("img");
-            if (imgElement) {
-              gsap.set(imgElement, {
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                position: "relative",
-              });
-            }
+              // Asegurar que la imagen ocupe todo el div
+              const imgElement = img.querySelector("img");
+              if (imgElement) {
+                gsap.set(imgElement, {
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  borderRadius: "6px",
+                  display: "block",
+                  margin: 0,
+                  padding: 0,
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  minWidth: "100%",
+                  minHeight: "100%",
+                });
+              }
+            } else if (img.parentElement === target && progress < 1) {
+              heroParent?.appendChild(img);
 
-            target.style.color = "#2980b9";
-          }
-        },
-        onKill: () => {
-          // Limpiar listener cuando se destruya
-          window.removeEventListener('resize', handleResize);
-        }
+              // Para Velvet Pour (índice 5), usar posicionamiento right
+              if (i === 5) {
+                gsap.set(img, {
+                  position: "fixed",
+                  right: "-6rem",
+                  top: currentY,
+                  width: currentWidth,
+                  height: currentHeight,
+                  rotation: currentRotation,
+                  zIndex: 999,
+                });
+              } else {
+                gsap.set(img, {
+                  position: "fixed",
+                  left: currentX,
+                  top: currentY,
+                  width: currentWidth,
+                  height: currentHeight,
+                  rotation: currentRotation,
+                  zIndex: 999,
+                });
+              }
+
+              // Restaurar la imagen interna a su tamaño original
+              const imgElement = img.querySelector("img");
+              if (imgElement) {
+                gsap.set(imgElement, {
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  position: "relative",
+                });
+              }
+
+              target.style.color = "#2980b9";
+            }
+          },
+          onKill: () => {
+            // Limpiar listener cuando se destruya
+            window.removeEventListener("resize", handleResize);
+          },
+        });
       });
-    });
     }, 200); // 200ms delay para asegurar renderizado completo
 
     return () => {
@@ -286,8 +289,10 @@ export default function Home() {
 
   return (
     <>
-      {isFirstVisit && <Loader show={showLoader} onComplete={handleLoaderComplete} />}
-        <div className="w-full min-h-screen flex flex-col justify-between intro">
+      {isFirstVisit && (
+        <Loader show={showLoader} onComplete={handleLoaderComplete} />
+      )}
+      <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
           className="relative px-8 pb-24 w-full"
@@ -314,7 +319,7 @@ export default function Home() {
                 Hello, I&apos;m{" "}
                 <span className="text-orange">Matias Carrera</span>
               </h3>
-              <h1 className="font-bold z-1000">
+              <h1 className="font-bold z-1000 text-md">
                 FULL-STACK DEVELOPER <br /> & UI/UX DESIGNER
               </h1>
             </div>
@@ -469,8 +474,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-white rounded-4xl shadow-2xl mt-16 p-4 md:p-8">
-            <div className="flex flex-col md:flex-row items-center p-2 gap-2">
+          <div className="bg-white rounded-4xl shadow-2xl mt-16 p-2 md:p-8">
+            <div className="flex flex-col md:flex-row items-center p-1 md:p-2 gap-2">
               <Avatar className="w-16 h-16 md:w-20 md:h-20">
                 <AvatarImage src="/mcanimated.png" />
                 <AvatarFallback className="bg-gray-200 text-gray-600 text-xl font-semibold">
@@ -488,9 +493,9 @@ export default function Home() {
               </div>
 
               <div className="flex-shrink-0">
-                <AnimatedButton 
-                  label="See all" 
-                  route="/work" 
+                <AnimatedButton
+                  label="See all"
+                  route="/work"
                   animate={true}
                   animateOnScroll={true}
                   delay={0.2}

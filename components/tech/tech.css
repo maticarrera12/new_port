@@ -1,19 +1,22 @@
 /* Tech Section */
 .tech-section {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  max-width: 100vw;
   color: var(--light);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
   box-sizing: border-box;
+  overflow-x: hidden;
+  margin: 0 auto;
 }
 
 .tech-container {
   position: relative;
-  width: 100%;
-  max-width: 1200px;
+  width: 90%;
+  max-width: 1000px;
   height: 80vh;
   min-height: 500px;
   display: flex;
@@ -128,6 +131,10 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
+  .tech-container {
+    width: 85%;
+  }
+
   .tech-logo {
     width: 80px;
     height: 80px;
@@ -145,8 +152,7 @@
   }
 
   .tech-container {
-    width: 100%;
-    max-width: 1000px;
+    width: 90%;
     height: 70vh;
     min-height: 400px;
   }
@@ -166,13 +172,13 @@
   .tech-section {
     padding: 0.5rem;
     height: 100vh;
+    width: 100%;
   }
 
   .tech-container {
-    width: 100%;
-    max-width: 100%;
-    height: 85vh;
-    min-height: 500px;
+    width: 98%;
+    height: 80vh;
+    min-height: 450px;
   }
 
   .tech-logo {
@@ -207,39 +213,63 @@
   .tech-section {
     padding: 0.25rem;
     height: 100vh;
-  }
-
-  .tech-container {
     width: 100%;
-    max-width: 100%;
-    height: 75vh;
-    min-height: 400px;
   }
 
-  .tech-logo {
-    width: 30px;
-    height: 30px;
-  }
-
-  .grid-row:first-child .tech-logo {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-@media (max-width: 360px) {
   .tech-container {
+    width: 96%;
     height: 70vh;
     min-height: 350px;
   }
 
   .tech-logo {
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
   }
 
   .grid-row:first-child .tech-logo {
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 400px) {
+  .tech-section {
+    padding: 0.125rem;
+    width: 100%;
+  }
+
+  .tech-container {
+    width: 98%;
+    height: 65vh;
+    min-height: 320px;
+  }
+
+  .tech-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .grid-row:first-child .tech-logo {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tech-container {
+    width: 99%;
+    height: 60vh;
+    min-height: 300px;
+  }
+
+  .tech-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .grid-row:first-child .tech-logo {
+    width: 32px;
+    height: 32px;
   }
 }
