@@ -320,7 +320,7 @@ export default function Home() {
       <div className="w-full flex flex-col intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          className="relative lg:px-8 pb-32 w-full overflow-x-hidden"
+          className="relative lg:px-8 pb-20 lg:pb-48 w-full overflow-x-hidden"
           style={{ marginTop: "5rem" }}
         >
           <div className="flex justify-center items-center w-full">
@@ -453,7 +453,7 @@ export default function Home() {
             <div className="w-1/2"></div>
             {/* Texto en la mitad derecha, posicionado a la derecha pero alineado a la izquierda */}
             <div className="w-1/2 flex justify-end">
-              <p className="text-orange font-extrabold max-w-[150px] md:max-w-[450px] text-sm leading-tight text-left">
+              <p className="text-orange font-extrabold max-w-[150px] md:max-w-[450px] text-sm leading-tight text-left z-1000">
                 FULL STACK DEVELOPER WITH A PASSION FOR CRAFTING SEAMLESS AND
                 ENGAGING DIGITAL EXPERIENCES.
               </p>
