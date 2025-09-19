@@ -292,10 +292,10 @@ export default function Home() {
       {isFirstVisit && (
         <Loader show={showLoader} onComplete={handleLoaderComplete} />
       )}
-      <div className="w-full min-h-screen flex flex-col justify-between intro">
+      <div className="w-full flex flex-col intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          className="relative px-8 pb-24 w-full overflow-x-hidden"
+          className="relative px-8 pb-48 w-full overflow-x-hidden"
           style={{ marginTop: "5rem" }}
         >
           <div className="flex justify-center items-center w-full">
@@ -438,7 +438,7 @@ export default function Home() {
       </div>
 
       {/* PORTFOLIO */}
-      <div className="flex justify-center items-center portfolio-section mt-16">
+      <div className="flex justify-center items-center portfolio-section mt-2 lg:mt-16">
         <div className="w-full max-w-6xl mx-auto px-6 relative">
           <div className="absolute top-0 right-8 md:right-16 z-20 hidden sm:block">
             <div className="relative">
