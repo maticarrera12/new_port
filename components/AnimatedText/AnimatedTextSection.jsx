@@ -69,7 +69,7 @@ const AnimatedTextSection = ({
       trigger: container,
       pin: container,
       start: "top top",
-      end: `+=${window.innerHeight * 4}`,
+      end: `+=${window.innerHeight * 1.5}`,
       pinSpacing: true,
       onStart: () => {
         // Forzar estilos cuando se hace pin
@@ -116,8 +116,8 @@ const AnimatedTextSection = ({
         words.forEach((word, index) => {
           const wordText = word.querySelector("span");
 
-          if (progress <= 0.7) {
-            const progressTarget = 0.7;
+          if (progress <= 0.8) {
+            const progressTarget = 0.8;
             const revealProgress = Math.min(1, progress / progressTarget);
 
             const overlapWords = 15;
