@@ -295,7 +295,7 @@ export default function Home() {
       <div className="w-full flex flex-col intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
-          className="relative px-8 pb-48 w-full overflow-x-hidden"
+          className="relative lg:px-8 pb-40 w-full overflow-x-hidden"
           style={{ marginTop: "5rem" }}
         >
           <div className="flex justify-center items-center w-full">
