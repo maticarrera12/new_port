@@ -21,51 +21,56 @@ const AnimatedTextSection = ({
 
     if (!container || !textElement) return;
 
-    // Procesar el texto y crear palabras
-    const processText = () => {
-      const paragraphs = textElement.querySelectorAll("p");
+    // Variable para el ScrollTrigger
+    let scrollTrigger;
 
-      paragraphs.forEach((paragraph) => {
-        const originalText = paragraph.textContent;
-        const words = originalText.split(/\s+/);
-        paragraph.innerHTML = "";
+    // Delay para asegurar que el DOM esté completamente renderizado
+    const initTimeout = setTimeout(() => {
+      // Procesar el texto y crear palabras
+      const processText = () => {
+        const paragraphs = textElement.querySelectorAll("p");
 
-        words.forEach((word) => {
-          if (word.trim()) {
-            const wordContainer = document.createElement("div");
-            wordContainer.className = "word";
-            wordContainer.style.visibility = "hidden";
-            wordContainer.style.opacity = "0";
-            // Valores iniciales ajustados para mobile para evitar overflow
-            const isMobile = window.innerWidth <= 768;
-            const isExtraSmall = window.innerWidth <= 480;
-            const initialX = isExtraSmall ? 3 : isMobile ? 6 : 12;
-            const initialY = isExtraSmall ? 2 : isMobile ? 4 : 8;
-            wordContainer.style.transform = `translate3d(${initialX}px, ${initialY}px, 0) scale(0.75)`;
-            wordContainer.style.filter = "blur(10px)";
+        paragraphs.forEach((paragraph) => {
+          const originalText = paragraph.textContent;
+          const words = originalText.split(/\s+/);
+          paragraph.innerHTML = "";
 
-            const wordText = document.createElement("span");
-            wordText.textContent = word;
-            wordText.style.visibility = "hidden";
-            wordText.style.opacity = "0";
+          words.forEach((word) => {
+            if (word.trim()) {
+              const wordContainer = document.createElement("div");
+              wordContainer.className = "word";
+              wordContainer.style.visibility = "hidden";
+              wordContainer.style.opacity = "0";
+              // Valores iniciales ajustados para mobile para evitar overflow
+              const isMobile = window.innerWidth <= 768;
+              const isExtraSmall = window.innerWidth <= 480;
+              const initialX = isExtraSmall ? 3 : isMobile ? 6 : 12;
+              const initialY = isExtraSmall ? 2 : isMobile ? 4 : 8;
+              wordContainer.style.transform = `translate3d(${initialX}px, ${initialY}px, 0) scale(0.75)`;
+              wordContainer.style.filter = "blur(10px)";
 
-            const normalizedWord = word.toLowerCase().replace(/[.,!?;:"]/g, "");
-            if (highlights.includes(normalizedWord)) {
-              wordContainer.classList.add("keyword-wrapper");
-              wordText.classList.add("keyword", normalizedWord);
+              const wordText = document.createElement("span");
+              wordText.textContent = word;
+              wordText.style.visibility = "hidden";
+              wordText.style.opacity = "0";
+
+              const normalizedWord = word.toLowerCase().replace(/[.,!?;:"]/g, "");
+              if (highlights.includes(normalizedWord)) {
+                wordContainer.classList.add("keyword-wrapper");
+                wordText.classList.add("keyword", normalizedWord);
+              }
+
+              wordContainer.appendChild(wordText);
+              paragraph.appendChild(wordContainer);
             }
-
-            wordContainer.appendChild(wordText);
-            paragraph.appendChild(wordContainer);
-          }
+          });
         });
-      });
-    };
+      };
 
-    processText();
+      processText();
 
-    // Crear ScrollTrigger
-    const scrollTrigger = ScrollTrigger.create({
+      // Crear ScrollTrigger
+      scrollTrigger = ScrollTrigger.create({
       trigger: container,
       pin: container,
       start: "top top",
@@ -212,9 +217,13 @@ const AnimatedTextSection = ({
         });
       },
     });
+    }, 100); // 100ms delay para asegurar renderizado completo
 
     return () => {
-      scrollTrigger.kill();
+      clearTimeout(initTimeout);
+      if (scrollTrigger) {
+        scrollTrigger.kill();
+      }
     };
   }, [text, highlights, wordHighlightBgColor]);
 

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CustomEase from "gsap/CustomEase";
@@ -8,6 +8,7 @@ import Tech from "../components/tech/Tech";
 import Image from "next/image";
 import AnimatedButton from "../components/AnimatedButton/AnimatedButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Loader from "../components/Loader/Loader";
 
 gsap.registerPlugin(ScrollTrigger, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
@@ -16,11 +17,45 @@ export default function Home() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroParentRef = useRef<HTMLDivElement | null>(null);
+  
+  // Detectar si es la primera visita de la sesión
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  const [loaderComplete, setLoaderComplete] = useState(false);
+
+  // Verificar primera visita al montar el componente
+  useLayoutEffect(() => {
+    const hasVisited = sessionStorage.getItem('hasVisitedHome');
+    if (!hasVisited) {
+      // Primera visita
+      setIsFirstVisit(true);
+      setShowLoader(true);
+      setLoaderComplete(false);
+      sessionStorage.setItem('hasVisitedHome', 'true');
+    } else {
+      // Ya ha visitado antes en esta sesión
+      setIsFirstVisit(false);
+      setShowLoader(false);
+      setLoaderComplete(true);
+    }
+  }, []);
+
+  const handleLoaderComplete = () => {
+    setLoaderComplete(true);
+    setShowLoader(false);
+  };
 
   useLayoutEffect(() => {
+    // Solo inicializar ScrollTriggers después de que termine el Loader
+    if (!loaderComplete) return;
 
-    const images = imageRefs.current;
-    const gridItems = gridRefs.current;
+    // Delay adicional para asegurar que todo el contenido esté renderizado
+    const initDelay = setTimeout(() => {
+      // Forzar recálculo de ScrollTrigger después del Loader
+      ScrollTrigger.refresh();
+      
+      const images = imageRefs.current;
+      const gridItems = gridRefs.current;
 
     images.forEach((img, i) => {
       if (!img) return;
@@ -30,6 +65,20 @@ export default function Home() {
 
       const heroParent = heroParentRef.current;
 
+      // Almacenar estilos originales del CSS
+      const originalStyles = {
+        position: window.getComputedStyle(img).position,
+        left: window.getComputedStyle(img).left,
+        top: window.getComputedStyle(img).top,
+        right: window.getComputedStyle(img).right,
+        bottom: window.getComputedStyle(img).bottom,
+        width: window.getComputedStyle(img).width,
+        height: window.getComputedStyle(img).height,
+        transform: window.getComputedStyle(img).transform,
+        zIndex: window.getComputedStyle(img).zIndex
+      };
+      
+      // Recalcular posiciones después del reseteo
       const rect = img.getBoundingClientRect();
       
       // Para la imagen de Velvet Pour (índice 5), calcular la posición left equivalente
@@ -78,18 +127,20 @@ export default function Home() {
 
       // Función para reposicionar la imagen en su posición original
       const repositionToOriginal = () => {
-        if (i === 5) {
-          // Solo reposicionar si no está en el grid
-          const isInGrid = img.parentElement?.classList.contains('parent');
-          if (!isInGrid) {
-            gsap.set(img, {
-              position: "fixed",
-              right: "-6rem",
-              top: "2vh",
-              transform: "rotate(6deg)",
-              zIndex: 999,
-            });
-          }
+        const isInGrid = img.parentElement?.classList.contains('parent');
+        if (!isInGrid) {
+          // Restaurar estilos originales almacenados
+          gsap.set(img, {
+            position: originalStyles.position,
+            left: originalStyles.left,
+            top: originalStyles.top,
+            right: originalStyles.right,
+            bottom: originalStyles.bottom,
+            width: originalStyles.width,
+            height: originalStyles.height,
+            transform: originalStyles.transform,
+            zIndex: originalStyles.zIndex
+          });
         }
       };
 
@@ -226,10 +277,16 @@ export default function Home() {
         }
       });
     });
-  }, []);
+    }, 200); // 200ms delay para asegurar renderizado completo
+
+    return () => {
+      clearTimeout(initDelay);
+    };
+  }, [loaderComplete]);
 
   return (
     <>
+      {isFirstVisit && <Loader show={showLoader} onComplete={handleLoaderComplete} />}
         <div className="w-full min-h-screen flex flex-col justify-between intro">
         {/* === HERO (simplificado a lo tuyo) === */}
         <div
@@ -460,56 +517,60 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Texts, Tech, etc */}
-      <AnimatedText
-        sections={[
-          {
-            text: [
-              "I'm Matías Carrera, a fullstack developer passionate about crafting intuitive and living interfaces. My work blends clarity, expression, and strong storytelling to bring bold ideas into motion.",
-              "With a background in design and development, I create projects that combine interactive experiences, modern structures, and a clear vision. Every line of code and every detail in the UI is built with intent — so digital products feel both functional and vibrant.",
-            ],
-            highlights: [
-              "vibrant",
-              "living",
-              "clarity",
-              "expression",
-              "storytelling",
-              "interactive",
-              "vision",
-              "intuitive",
-            ],
-            className: "about-container",
-            containerClass: "anime-text-container",
-          },
-        ]}
-      />
+      {/* Texts, Tech, etc - Solo renderizar después del Loader */}
+      {loaderComplete && (
+        <>
+          <AnimatedText
+            sections={[
+              {
+                text: [
+                  "I'm Matías Carrera, a fullstack developer passionate about crafting intuitive and living interfaces. My work blends clarity, expression, and strong storytelling to bring bold ideas into motion.",
+                  "With a background in design and development, I create projects that combine interactive experiences, modern structures, and a clear vision. Every line of code and every detail in the UI is built with intent — so digital products feel both functional and vibrant.",
+                ],
+                highlights: [
+                  "vibrant",
+                  "living",
+                  "clarity",
+                  "expression",
+                  "storytelling",
+                  "interactive",
+                  "vision",
+                  "intuitive",
+                ],
+                className: "about-container",
+                containerClass: "anime-text-container",
+              },
+            ]}
+          />
 
-      <Tech />
+          <Tech />
 
-      <AnimatedText
-        sections={[
-          {
-            text: [
-              "From prototypes to full-stack applications, I build solutions that feel modern, intuitive, and interactive. I focus on responsive design, smooth motion, and creative problem solving.",
-              "My goal is to turn complex challenges into clear and elegant digital products — where expression meets clarity, and every idea finds its shape.",
-            ],
-            highlights: [
-              "modern",
-              "intuitive",
-              "interactive",
-              "responsive",
-              "motion",
-              "creative",
-              "elegant",
-              "expression",
-              "clarity",
-              "shape",
-            ],
-            className: "features",
-            containerClass: "anime-text-container",
-          },
-        ]}
-      />
+          <AnimatedText
+            sections={[
+              {
+                text: [
+                  "From prototypes to full-stack applications, I build solutions that feel modern, intuitive, and interactive. I focus on responsive design, smooth motion, and creative problem solving.",
+                  "My goal is to turn complex challenges into clear and elegant digital products — where expression meets clarity, and every idea finds its shape.",
+                ],
+                highlights: [
+                  "modern",
+                  "intuitive",
+                  "interactive",
+                  "responsive",
+                  "motion",
+                  "creative",
+                  "elegant",
+                  "expression",
+                  "clarity",
+                  "shape",
+                ],
+                className: "features",
+                containerClass: "anime-text-container",
+              },
+            ]}
+          />
+        </>
+      )}
     </>
   );
 }
